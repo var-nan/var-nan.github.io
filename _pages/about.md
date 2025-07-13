@@ -29,6 +29,8 @@ latest_posts:
 
 I'm a master's student in computer science at [Iowa State University](https://iastate.edu), with a focus on parallel computing and distributed systems. 
 
-I previously worked at Accenture, a global professional services company, as an associate software engineer, developing REST microservices for some of its clients with Java as the backend. I currently work as a research assistant in the Department of Industrial Systems Engineering at Iowa State University, developing a multithreaded version of a Mixed-Integer Programming (MIP) solver for unsplittable network flow problems.
+I previously worked at Accenture, a global professional services company, as an associate software engineer, developing REST microservices for some of its clients with Java as the backend. 
+
+I currently work as a research assistant in the Department of Industrial Systems Engineering at Iowa State University, developing a multithreaded version of a Mixed-Integer Programming (MIP) solver for unsplittable network flow problems.
 
 Apart from academics, I am passionate about computers, geopolitics, and cooking (rookie cook). Talking about computers is a good way to get me involved.

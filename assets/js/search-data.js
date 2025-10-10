@@ -51,7 +51,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-a-post-with-plotly-js",
+            },{id: "post-a-gentle-introduction-to-trie",
+        
+          title: "A gentle introduction to Trie.",
+        
+        description: "fast and efficient prefix matching trees.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/code/";
+          
+        },
+      },{id: "post-a-post-with-plotly-js",
         
           title: "a post with plotly.js",
         
@@ -379,17 +390,6 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2015/math/";
-          
-        },
-      },{id: "post-a-post-with-code",
-        
-          title: "a post with code",
-        
-        description: "an example of a blog post with some code",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2015/code/";
           
         },
       },{id: "post-a-post-with-images",

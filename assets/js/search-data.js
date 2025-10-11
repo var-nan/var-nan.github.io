@@ -51,7 +51,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-a-gentle-introduction-to-trie",
+            },{id: "post-autocompletion-using-trie",
+        
+          title: "Autocompletion using Trie",
+        
+        description: "a trivial autocompletion using Trie",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/auto-completion-system/";
+          
+        },
+      },{id: "post-a-gentle-introduction-to-trie",
         
           title: "A gentle introduction to Trie.",
         

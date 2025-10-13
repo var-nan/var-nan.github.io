@@ -1,14 +1,10 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - var-nan
 
 repo_description_lines_max: 2
 
 github_repos:
-  - alshedivat/al-folio
-  - jekyll/jekyll
-  - twbs/bootstrap
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - mathjax/MathJax
-  - jpswalsh/academicons
+  - var-nan/SGUFP_Solver
+  - var-nan/LumiDB
+  - var-nan/nfs
+  - ephraim71/rfs

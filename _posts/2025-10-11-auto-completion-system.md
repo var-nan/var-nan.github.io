@@ -3,12 +3,12 @@ layout: post
 title: Autocompletion using Trie
 date: 2025-10-11 13:05:10
 description: a trivial autocompletion using Trie
-tags: trie
-categories: trees LLD
+tags: trie string
+categories: Trees LLD
 featured: True
 ---
 
-In my previous post, I introduced the Trie data structure, its basic operations, and how it allows efficient prefix search. Now, I'll take it one step further and show how Trie can be used to build an autocomplete system.
+In my [previous post](../trie), I introduced the Trie data structure, its basic operations, and how it allows efficient prefix search. Now, I'll take it one step further and show how Trie can be used to build an autocomplete system.
 
 Instead of building a feature-rich autocomplete system, I used the specifications from [Leetcode 642](https://leetcode.com/problems/design-search-autocomplete-system/description/) for a trivial autocomplete system.
 

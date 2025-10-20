@@ -34,3 +34,7 @@ I previously worked at Accenture, a global professional services company, as an 
 I currently work as a research assistant in the Department of Computer Science at Iowa State University, developing a multithreaded version of a Mixed-Integer Programming (MIP) solver for unsplittable network flow problems.
 
 Apart from academics, I am passionate about computers, geopolitics, and cooking (just a rookie cook). Talking about computers is a good way to get me involved.
+
+
+
+This site is still under construction. Some of the information is not entirely true.

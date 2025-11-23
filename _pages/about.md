@@ -1,12 +1,12 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
 subtitle: systems programmer # <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: profile_pic.jpeg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>115 Atanasoff Hall</p>
@@ -22,16 +22,16 @@ announcements:
   limit: 5 # leave blank to include all the news in the `_news` folder
 
 latest_posts:
-  enabled: false
+  enabled: true
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I'm a master's student in computer science at [Iowa State University](https://iastate.edu), with a focus on parallel computing and distributed systems. 
+I'm a master's student in computer science at [Iowa State University](https://iastate.edu), with a focus on parallel computing and distributed systems. My thesis focuses on developing a parallel framework a stochastic Mixed-Integer Programming solver based on Decision Diagrams (DD) and was supervised by [Dr. Danial Davarnia](https://sites.google.com/view/danialdavarnia), and [Dr. Ali Jannesari](https://swapp.cs.iastate.edu/people/ali-jannesari).
 
-I previously worked at Accenture, a global professional services company, as an associate software engineer, developed REST microservices for some of its clients with Java as the backend. 
+I currently work as a graduate research assistant in the Department of Computer Science at Iowa State University.  Previously, I worked at Accenture, a global professional services company, as an associate software engineer, developed REST microservices for some of its clients with Java as the backend.
 
-I currently work as a research assistant in the Department of Computer Science at Iowa State University, developing a multithreaded version of a Mixed-Integer Programming (MIP) solver for unsplittable network flow problems.
+I am passionate about developing scalable, high-performance systems and exploring how distributed systems and databases can power the next generation of applications. I currently contribute to [Apache Kvrocks](https://www.kvrocks.apache.org) project (a Redis compatible database built on RocksDB) and my contributions can be found [here](https://github.com/apache/kvrocks/pulls?q=is%3Apr+author%3Avar-nan+).
 
-Apart from academics, I am passionate about computers, geopolitics, and cooking (just a rookie cook). Talking about computers is a good way to get me involved.
 
+Apart from academics, I'm into computers, and cooking (just a rookie cook). Talking about computers is a good way to get me involved.

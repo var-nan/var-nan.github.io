@@ -15,9 +15,9 @@ Organize your courses by years, topics, or universities, however you like! -->
 ### Graduate Research Assistant
 Iowa State University $\quad | \quad$ Ames, Iowa $\quad |\quad$ March 2024 -- Present
 
-C++, Linux, CMake, GCC, Intel VTune, Perf (Linux), GDB, Strace, Google Test, Google Benchmark, Gurobi Solver 
+C++, Linux, CMake, GCC, Conan, Pthreads, Intel VTune, Perf (Linux), GDB, Strace, Google Test, Google Benchmark, Gurobi Solver 
 
-* Paralellization of a Mixed-Integer Programming (MIP) solver for network flow optimization problems.
+* Parallelization of a Mixed-Integer Programming (MIP) solver for network flow optimization problems.
 * Identified critical regions of the codebase using Intel VTune and Perf profilers, and optimized key data structures to reduce cache misses, and working set size. Resulted $\approx 20\%$ performance improvement.
 * Designed a new concurrent data structure to efficiently manage tens of thousands of nodes shared among concurrent reader and writer threads.
 * Designed a new lock-free work-stealing algorithm that is $4x$ faster than C++ taskflow for bulk operations in Single-stealer scenarios.

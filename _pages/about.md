@@ -31,7 +31,7 @@ I'm a master's student in computer science at [Iowa State University](https://ia
 
 I currently work as a graduate research assistant in the Department of Computer Science at Iowa State University.  Previously, I worked at Accenture, a global professional services company, as an associate software engineer, developed REST microservices for some of its clients with Java as the backend.
 
-I am passionate about developing scalable, high-performance systems and exploring how distributed systems and databases can power the next generation of applications. I currently contribute to [Apache Kvrocks](https://www.kvrocks.apache.org) project (a Redis compatible database built on RocksDB) and my contributions can be found [here](https://github.com/apache/kvrocks/pulls?q=is%3Apr+author%3Avar-nan+).
+I am passionate about developing scalable, high-performance systems and exploring how distributed systems and databases can power the next generation of applications. I currently contribute to [Apache Kvrocks](https://kvrocks.apache.org) project (a Redis compatible database built on RocksDB) and my contributions can be found [here](https://github.com/apache/kvrocks/pulls?q=is%3Apr+author%3Avar-nan+).
 
 
 Apart from academics, I'm into computers, and cooking (just a rookie cook). Talking about computers is a good way to get me involved.

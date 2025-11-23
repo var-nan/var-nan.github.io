@@ -102,7 +102,12 @@ ninja.data = [{
             window.location.href = "/blog/2021/distill/";
           
         },
-      },{id: "news-a-simple-inline-announcement",
+      },{id: "books-discover-the-arjuna-in-you",
+          title: 'Discover the Arjuna in You.',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/discover_arjuna/";
+            },},{id: "news-a-simple-inline-announcement",
           title: 'A simple inline announcement.',
           description: "",
           section: "News",},{id: "news-a-long-announcement-with-details",

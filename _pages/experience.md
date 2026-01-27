@@ -29,9 +29,11 @@ C++, Linux, CMake, GCC, Conan, Pthreads, Intel VTune, Perf (Linux), GDB, Strace,
 Accenture $\quad | \quad$ Bengaluru, India $\quad | \quad$ December 2021 -- January 2023
 
 Java, Spring Framework, Hibernate, Apache Maven, Postman, MySQL, MongoDB
-* Developed REST backend microservices with ownership of performance-critical paths in a production system of 400K+ users.
+* Developed REST backend microservices to manage a production system of 400K+ users.
 * Improved write-path latency by $15\%$ with multithreading and by $9\%$ through refactoring the data access patterns.
-* Optimized backend architecture by consolidating redundant microservices into a unified, high-performance service; eliminated network serialization overhead to reduce end-to-end latency and cut AWS compute costs by $10\%$.
+* Optimized backend architecture by consolidating redundant microservices into a unified, high-performance service.
+* Eliminated network serialization overhead to reduce end-to-end latency and cut AWS compute costs by $10\%$.
+* Actively participated in Accenture Green Cloud Initiative.
 
 
 ### Data Analyst Intern

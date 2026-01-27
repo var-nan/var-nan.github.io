@@ -27,9 +27,9 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I'm a master's student in computer science at [Iowa State University](https://iastate.edu), with a focus on parallel computing and distributed systems. My thesis focuses on developing a parallel framework a stochastic Mixed-Integer Programming solver based on Decision Diagrams (DD) and was supervised by [Dr. Danial Davarnia](https://sites.google.com/view/danialdavarnia), and [Dr. Ali Jannesari](https://swapp.cs.iastate.edu/people/ali-jannesari).
+I'm a recent master's graduate in computer science from [Iowa State University](https://iastate.edu), with a focus on parallel computing and distributed systems. My thesis focuses on developing a parallel framework a stochastic Mixed-Integer Programming solver based on Decision Diagrams (DD) and was supervised by [Dr. Danial Davarnia](https://sites.google.com/view/danialdavarnia), and [Dr. Ali Jannesari](https://swapp.cs.iastate.edu/people/ali-jannesari).
 
-I currently work as a graduate research assistant in the Department of Computer Science at Iowa State University.  Previously, I worked at Accenture, a global professional services company, as an associate software engineer, developed REST microservices for some of its clients with Java as the backend.
+During my master's program, I worked as a graduate research assistant in the Department of Computer Science at Iowa State University.  Previously, I worked at Accenture, a global professional services company, as an associate software engineer, developed REST microservices for some of its clients with Java as the backend.
 
 I am passionate about developing scalable, high-performance systems and exploring how distributed systems and databases can power the next generation of applications. I currently contribute to [Apache Kvrocks](https://kvrocks.apache.org) project (a Redis compatible database built on RocksDB) and my contributions can be found [here](https://github.com/apache/kvrocks/pulls?q=is%3Apr+author%3Avar-nan+).
 

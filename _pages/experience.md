@@ -12,23 +12,26 @@ nav_order: 4
 Organize your courses by years, topics, or universities, however you like! -->
 
 
-### Graduate Research Assistant
-Iowa State University $\quad | \quad$ Ames, Iowa $\quad |\quad$ March 2024 -- Present
+### Research Assistant (Software Engineering)
+Iowa State University $\quad | \quad$ Ames, Iowa $\quad |\quad$ March 2024 -- December 2025
 
 C++, Linux, CMake, GCC, Conan, Pthreads, Intel VTune, Perf (Linux), GDB, Strace, Google Test, Google Benchmark, Gurobi Solver 
 
 * Parallelization of a Mixed-Integer Programming (MIP) solver for network flow optimization problems.
-* Identified critical regions of the codebase using Intel VTune and Perf profilers, and optimized key data structures to reduce cache misses, and working set size. Resulted $\approx 20\%$ performance improvement.
+* Designed and implemented a custom lock-free work-stealing algorithm that outperformed the industry-standard C++ Taskflow library's work-stealing algorithm by $4x$ for specific solver workloads.
+* Identified critical regions of the codebase using Intel VTune and Perf profilers, and optimized key data structures to reduce cache misses, and working set size, resulted in $\approx 20\%$ performance improvement.
 * Designed a new concurrent data structure to efficiently manage tens of thousands of nodes shared among concurrent reader and writer threads.
-* Designed a new lock-free work-stealing algorithm that is $4x$ faster than C++ taskflow for bulk operations in Single-stealer scenarios.
+* Collaborated with Operations Research PhDs to translate abstract mathematical models into high-performance, thread-safe code.
+<!-- * Designed a new lock-free work-stealing algorithm that is $4x$ faster than C++ taskflow for bulk operations in Single-stealer scenarios. -->
 
 
 ### Application Development Associate 
 Accenture $\quad | \quad$ Bengaluru, India $\quad | \quad$ December 2021 -- January 2023
 
 Java, Spring Framework, Hibernate, Apache Maven, Postman, MySQL, MongoDB
-* Built REST microservices for a fintech client with API gateway pattern to maintain ($> 400K$) user profiles.
-* Improved API response time of insert requests by $15\%$ with multithreading and by $9\%$ with refactoring.
+* Developed REST backend microservices with ownership of performance-critical paths in a production system of 400K+ users.
+* Improved write-path latency by $15\%$ with multithreading and by $9\%$ through refactoring the data access patterns.
+* Optimized backend architecture by consolidating redundant microservices into a unified, high-performance service; eliminated network serialization overhead to reduce end-to-end latency and cut AWS compute costs by $10\%$.
 
 
 ### Data Analyst Intern

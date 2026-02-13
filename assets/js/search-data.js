@@ -58,7 +58,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/resume/";
               },
-            },{id: "post-dynamic-programming-bitmask",
+            },{id: "post-floyd-39-s-cycle-detection",
+        
+          title: "Floyd&#39;s Cycle Detection",
+        
+        description: "Detecting cycle in a linked list.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/floy-cycle-detection/";
+          
+        },
+      },{id: "post-dynamic-programming-bitmask",
         
           title: "Dynamic Programming + Bitmask",
         

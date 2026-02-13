@@ -1,0 +1,159 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Floyd's Cycle Detection | Raja K </title> <meta name="author" content="Raja Sai Nandhan Kataru"> <meta name="description" content="Detecting cycle in a linked list."> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://var-nan.github.io/blog/2026/floy-cycle-detection/"> <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <link defer rel="stylesheet" type="text/css" href="/assets/css/tikzjax.min.css?fd53cc8a9145aa7bee785ae5c8f9e79b"> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Raja K </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">Blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/education/">Education </a> </li> <li class="nav-item "> <a class="nav-link" href="/experience/">Experience </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/"> </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">submenus </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/books/">bookshelf</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/resume/">resume</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Floyd's Cycle Detection</h1> <p class="post-meta"> Created on February 13, 2026 </p> <p class="post-tags"> <a href="/blog/2026"> <i class="fa-solid fa-calendar fa-sm"></i> 2026 </a>   ·   <a href="/blog/tag/cycle-detection"> <i class="fa-solid fa-hashtag fa-sm"></i> cycle-detection</a>   <a href="/blog/tag/linked-list"> <i class="fa-solid fa-hashtag fa-sm"></i> linked-list</a>   <a href="/blog/tag/graph"> <i class="fa-solid fa-hashtag fa-sm"></i> graph</a>   ·   <a href="/blog/category/algorithm"> <i class="fa-solid fa-tag fa-sm"></i> algorithm</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>Given a linked list, the question is to find if the linked list contains a cycle or not. If it does contain a cycle, find the start of the cycle.</p> <p><br></p> <script type="text/tikz">
+\begin{document}
+    \usetikzlibrary{arrows.meta, positioning}
+    \begin{tikzpicture}[
+            node distance=1.8cm,
+            every node/.style={draw, circle, minimum size=1cm},
+            >=Stealth
+        ]
+        % Linear part
+        \node (n1) {1};
+        \node (n2) [right of=n1] {2};
+        \node (n3) [right of=n2] {3};
+        \node (n4) [right of=n3] {4};
+        \node (n5) [below right of=n4] {5};
+
+        % Cycle 
+        \node (n6) [below of=n5] {6};
+        \node (n7) [below left of=n6] {7};
+        \node (n8) [above left of=n7] {8};
+        \node (n9) [above of=n8] {9};
+        \node (head) [draw=none, below of=n1] {\small Head};
+        % Edges (linear part)
+        \draw[->] (n1) -- (n2);
+        \draw[->] (n2) -- (n3);
+        \draw[->] (n3) -- (n4);
+        \draw[->] (n4) -- (n5);
+        % Edges (cycle)
+        \draw[->] (n5) -- (n6);
+        \draw[->] (n6) -- (n7);
+        \draw[->] (n7) -- (n8);
+        \draw[->] (n8) -- (n9);
+        \draw[->] (n9) to (n4);
+
+        \draw[->, pink] (head) to (n1);
+    \end{tikzpicture}
+\end{document}
+</script> <p><br></p> <p>Simply, we can check if the given linked list contains a cycle or not with a hash map. Start iterating at the <code class="language-plaintext highlighter-rouge">head</code> and keep track of the node (pointers) in a hash map. If a node (pointer) already exists in the hash, then a cycle exists and that pointer will be the start of the cycle. The has $O(N)$ time and $O(N)$ space complexity, where $N$ is the number of nodes in the linked list.</p> <p>Now, if we want to solve the same problem with $O(1)$ memory, we need to use Floyd’s Cycle algorithm or Tortoise and Hare algorithm. In this we use make use of $fast$-and-$slow$ pointer approach.</p> <h2 id="floyds-cycle-detection">Floyd’s Cycle detection</h2> <p>In this algorithm, we make use of $fast$ and $slow$ pointers that both start at the <code class="language-plaintext highlighter-rouge">head</code>. $fast$ pointer moves at $2x$ than $slow$ pointer. These both pointers iterates until either (a) $fast$ becomes <code class="language-plaintext highlighter-rouge">NULL</code> or (b) $fast$ = $slow$. When $fast$ becomes <code class="language-plaintext highlighter-rouge">NULL</code>, it means that there is no cycle. If the linked list has a cycle, then these two pointers meet <em>somewhere</em> on the cycle (proof below). From the below figure, both the pointers meet at Node 7.</p> <details><summary>Click here to know why both pointers meet in a cycle</summary> <p>The relative speed between the $fast$ and $slow$ pointers is 1. Inside the cycle of length $C$, the distance between the $fast$ and $slow$ decreases by 1 and after atmost $C$ steps, both pointers meet.</p> </details> <p><br></p> <script type="text/tikz">
+        \begin{document}
+    \usetikzlibrary{arrows.meta, positioning}
+        \begin{tikzpicture}[
+            node distance=1.8cm,
+            every node/.style={draw, circle, minimum size=1cm},
+            >=Stealth
+        ]
+        % Linear part
+        \node (n1) {1};
+        \node (n2) [right of=n1] {2};
+        \node (n3) [right of=n2] {3};
+        \node (n4) [right of=n3] {4};
+        \node (n5) [below right of=n4] {5};
+
+        % Cycle 
+        \node (n6) [below of=n5] {6};
+        \node (n7) [below left of=n6] {7};
+        \node (n8) [above left of=n7] {8};
+        \node (n9) [above of=n8] {9};
+        \node (head) [draw=none, below of=n1] {\small Head};
+        % Edges (linear part)
+        \draw[->] (n1) -- (n2);
+        \draw[->] (n2) -- (n3);
+        \draw[->] (n3) -- (n4);
+        \draw[->] (n4) -- (n5);
+        % Edges (cycle)
+        \draw[->] (n5) -- (n6);
+        \draw[->] (n6) -- (n7);
+        \draw[->] (n7) -- (n8);
+        \draw[->] (n8) -- (n9);
+        \draw[->] (n9) to (n4);
+        \draw[->, pink] (head) to (n1);
+
+        \node (sl) [draw=none, left of=n7]{\small Fast};
+        \node (fs) [draw=none, right of = n7] {\small Slow};
+        % Slow and Fast pointers meeting at node 7
+        \draw[->, thick, blue] (sl) to (n7);
+        \draw[->, thick, red] (fs) to (n7);
+        \end{tikzpicture}
+
+    \end{document}
+</script> <p><br></p> <p>Now the question, how to find the start of the cycle. For this, we need to take a detour into some elementary math to compute the distances travelled by both the pointers.</p> <p>And let $K$ be the distance from the start of the linked list to the start of the cycle and $D$ be the distance from start of the cycle to the point where two pointers meet, and $C$ be the length of cycle. Let $M$ be the distance travelled by the $slow$ pointer when it meets with $fast$ pointer. Since the $fast$ pointer moves at $2x$, its distance will be $2M$.</p> <p>For sake of simplicity, assume that both pointers iterated through the cycle multiple times before they meet. From above, distance travelled by $slow$ pointer is $\begin{equation}M = K + D + C \times i \end{equation}$ and the distance travelled by $fast$ pointer is $\begin{equation} 2M = K + D + C \times j \end{equation}$. Since they both meet after some steps, we can equal both equations, (1) = (2),</p> \[K + D + C \times j = 2 \times (K + D + C \times i)\] \[K + D = C \times (j - 2i)\] <p>$\begin{equation} K + D \equiv 0 \mod C \end{equation}$</p> <p>The above equation (3) tells us that $K + D$ is a multiple of $C$ (length of cycle). It means, when a pointer starts from the <code class="language-plaintext highlighter-rouge">head</code> and another pointer starts from $D$ steps away from the start of the cycle, after exactly $K + D$ steps, they both meet at a location on the cycle where the second pointer initially started.</p> <p><br></p> <script type="text/tikz">
+    \begin{document}
+        \usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
+        \begin{tikzpicture}[
+            node distance=1.8cm,
+            every node/.style={draw, circle, minimum size=1cm},
+            >=Stealth
+        ]
+            % Linear part
+            \node (n1) {1};
+            \node (n2) [right of=n1] {2};
+            \node (n3) [right of=n2] {3};
+            \node (n4) [right of=n3] {4};
+            \node (n5) [below right of=n4] {5};
+
+            % Cycle 
+            \node (n6) [below of=n5] {6};
+            \node (n7) [below left of=n6] {7};
+            \node (n8) [above left of=n7] {8};
+            \node (n9) [above of=n8] {9};
+            \node (head) [draw=none, below of=n1] {\small Head};
+            % Edges (linear part)
+            \draw[->, green] (n1) -- (n2);
+            \draw[->, green] (n2) -- (n3);
+            \draw[->, green] (n3) -- (n4);
+            \draw[->, violet] (n4) -- (n5);
+            % Edges (cycle)
+            \draw[->, violet] (n5) -- (n6);
+            \draw[->, violet] (n6) -- (n7);
+            \draw[->, orange] (n7) -- (n8);
+            \draw[->, orange] (n8) -- (n9);
+            \draw[->, orange] (n9) to (n4);
+
+            \draw[->, pink] (head) to (n1);
+
+            \node (sl) [draw=none, left of=n7]{\small Fast};
+            \node (fs) [draw=none, right of = n7] {\small Slow};
+            % Slow and Fast pointers meeting at node 7
+            \draw[->, thick, blue] (sl) to (n7);
+            \draw[->, thick, red] (fs) to (n7);
+
+            \node (inv1) [draw=none, right of=n4]{};
+            \node (inv2) [draw=none, right of=n7]{};
+            \node (inv3) [draw=none, above =0.05cm of n1]{};
+            \node (inv4) [draw=none, above =0.05cm of n4]{};
+
+            \draw[decorate,decoration={brace,amplitude=8pt}] 
+                (inv3.north) -- (inv4.north) 
+                node[draw=none, midway, yshift=20pt] {\large $K$};
+
+            \draw[decorate,decoration={brace,amplitude=8pt}, xshift=20pt]
+                (inv1.east) -- (inv2.east)
+                node[draw=none, midway, right=8pt] {\large $D$};
+        \end{tikzpicture}
+    \end{document}
+</script> <p><br></p> <p>For example, let the $fast$ started at <code class="language-plaintext highlighter-rouge">head</code> and $slow$ started at Node 7 (exactly where it was stopped earlier), then after after $K + D$ steps both pointers meet again at Node 7. Now we don’t know what the value of $K + D$. If we observe the diagram below, since they meet at Node 7, and $fast$ and $slow$ moves at same speed, they must meet at Node 4 and reach to Node 7 together, which indicates that they both meet after $K$ steps and travel $D$ steps together. Thus when the both pointers first meet, its the start of the cycle, which is $K$ steps from the <code class="language-plaintext highlighter-rouge">head</code>.</p> <p>Below is the C++ implementation of Floyd’s cycle detection algorithm. It returns the pointer to the start of the cycle, if exists. Time complexity: $O(N)$ and space complexity $O(1)$.</p> <pre><code class="language-C++">Node *find_cycle_start(Node *head) {
+    if (!head || !head-&gt;next) return nullptr;
+
+    Node *fast = head, *slow = head;
+
+    while (fast &amp;&amp; fast-&gt;next) {
+        fast = fast-&gt;next-&gt;next;
+        slow = slow-&gt;next;
+        if (fast == slow) break;
+    }
+
+    if (!fast) return nullptr;
+
+    // cycle exist, find its start
+    fast = head;
+    while (fast != slow) {
+        fast = fast-&gt;next;
+        slow = slow-&gt;next;
+    }
+    return fast;
+}
+</code></pre> <p>Good Day :)</p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/bitmask-dp/">Dynamic Programming + Bitmask</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/auto-completion-system/">Autocompletion using Trie</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/trie/">A gentle introduction to Trie.</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/tikzjax/">a post with TikZJax</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2021/distill/">a distill-style blog post</a> </li> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Raja Sai Nandhan Kataru. Last updated: February 13, 2026. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="/assets/js/tikzjax.min.js?32ae771474611c1ece3b56767307fd31" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>

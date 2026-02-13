@@ -1,4 +1,158 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://var-nan.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://var-nan.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-02-13T20:04:57+00:00</updated><id>https://var-nan.github.io/feed.xml</id><title type="html">Raja K</title><entry><title type="html">Dynamic Programming + Bitmask</title><link href="https://var-nan.github.io/blog/2025/bitmask-dp/" rel="alternate" type="text/html" title="Dynamic Programming + Bitmask"/><published>2025-10-14T00:00:00+00:00</published><updated>2025-10-14T00:00:00+00:00</updated><id>https://var-nan.github.io/blog/2025/bitmask-dp</id><content type="html" xml:base="https://var-nan.github.io/blog/2025/bitmask-dp/"><![CDATA[<p>Post on bitmask with dynamic programming. coming soon.</p>]]></content><author><name></name></author><category term="algorithms"/><summary type="html"><![CDATA[speeding up search through permutations for smaller inputs.]]></summary></entry><entry><title type="html">Autocompletion using Trie</title><link href="https://var-nan.github.io/blog/2025/auto-completion-system/" rel="alternate" type="text/html" title="Autocompletion using Trie"/><published>2025-10-11T13:05:10+00:00</published><updated>2025-10-11T13:05:10+00:00</updated><id>https://var-nan.github.io/blog/2025/auto-completion-system</id><content type="html" xml:base="https://var-nan.github.io/blog/2025/auto-completion-system/"><![CDATA[<p>In my <a href="../trie">previous post</a>, I introduced the Trie data structure, its basic operations, and how it allows efficient prefix search. Now, I’ll take it one step further and show how Trie can be used to build an autocomplete system.</p> <p>Instead of building a feature-rich autocomplete system, I used the specifications from <a href="https://leetcode.com/problems/design-search-autocomplete-system/description/">Leetcode 642</a> for a trivial autocomplete system.</p> <p>I just noticed <a href="https://leetcode.com/problems/design-search-autocomplete-system/description/">Leetcode 642</a> is behind the premium paywall. Below is the problem description.</p> <blockquote> <p>Design a search autocomplete system for a search engine. Users may input a sentence (atleast one word end with a special character <code class="language-plaintext highlighter-rouge">#</code>). You are given a string array <code class="language-plaintext highlighter-rouge">sentences</code> and an integer array <code class="language-plaintext highlighter-rouge">times</code> both of length <code class="language-plaintext highlighter-rouge">n</code> where <code class="language-plaintext highlighter-rouge">sentences[i]</code> is a previously typed sentence and <code class="language-plaintext highlighter-rouge">times[i]</code> is the corresponding number of times the sentence was typed. For each input character except <code class="language-plaintext highlighter-rouge">#</code>, return the top 3 historical hot sentences that have the same prefix as the part of the sentence already typed. Here are the specific rules:</p> <ul> <li>The hot degree for a sentence is defined as the number of times a user typed the exactly same sentence before.</li> <li>The returned top 3 hot sentences should be sorted by hot degree (The first is the hottest one). If several sentences have the same hot degree, use ASCII-code order (smaller one appears first).</li> <li>If less than 3 hot sentences exist, return as many as you can.</li> <li>When the input is a special character, it means the sentence ends, and in this case, you need to return an empty list. Two functions in the class: <ol> <li><code class="language-plaintext highlighter-rouge">AutocompleteSystem(String[] sentences, int[] times)</code>: Initializes the object with the <code class="language-plaintext highlighter-rouge">sentences</code> and <code class="language-plaintext highlighter-rouge">times</code> arrays.</li> <li><code class="language-plaintext highlighter-rouge">List&lt;String&gt; input(char c)</code> This indicates that the user typed the character <code class="language-plaintext highlighter-rouge">c</code>. Add this character to the already inputted string.</li> </ol> </li> <li>Returns the empty array if <code class="language-plaintext highlighter-rouge">c == '#'</code> and stores the inputted sentence in the sytem.</li> <li>Returns the top 3 historical hot sentence that have the same prefix as the part of sentence already typed. If it has fewer than 3 matches, return them all.</li> </ul> </blockquote> <p>I think the input specification is bit confusing. Below is an example.</p> <p>Given <code class="language-plaintext highlighter-rouge">sentences[] = {"i love cake", "island", "indra", "i like leetcode", "i like biryani"}</code> and <code class="language-plaintext highlighter-rouge">times[] = {3, 2, 4, 1, 4}</code>.</p> <p>If the user first types “i”, then the system should return <code class="language-plaintext highlighter-rouge">["i like biryani", "i like leetcode", "i love cake"]</code>. The result should be sorted by its hot value and then by ascii value upon tie. Later, if user types “p”, the input string becomes “ip”, then the system should return <code class="language-plaintext highlighter-rouge">[]</code>, as no string has “ip” as its prefix. Then, if the user types “#”, the system should assume that input is completed and insert this string into the tree.</p> <h2 id="intuition">Intuition</h2> <p>Every sentence has a score (hot value) associated with it. This is used to rank the qualified sentences. Here, the term <em>qualified</em> means that a string has matching prefix. So, store the top 3 qualified sentences in the Trie node.</p> <p>Maintain a string <code class="language-plaintext highlighter-rouge">s</code> with already inputted characters. On input <code class="language-plaintext highlighter-rouge">c</code>, append it to <code class="language-plaintext highlighter-rouge">s</code>. Start traversing the tree from the root with <code class="language-plaintext highlighter-rouge">s</code>. At the end of traversal, select the node and return top 3 sentences from it. If <code class="language-plaintext highlighter-rouge">#</code> is inputted, add <code class="language-plaintext highlighter-rouge">s</code> to the tree with its score as 1 and reset <code class="language-plaintext highlighter-rouge">s</code>.</p> <h2 id="implementation">Implementation</h2> <p>The implementation <em>slightly</em> seperates the Trie logic from the autocomplete system.</p> <p>The <code class="language-plaintext highlighter-rouge">Node</code> class stores the top 3 sentences for its corresponding prefix. Instead of storing the actual sentences, it stores the sentence Id. This Id can be used to retrieve the actual sentence from the global pool.</p> <p>The <code class="language-plaintext highlighter-rouge">Trie</code> class provides two functions <code class="language-plaintext highlighter-rouge">add</code> and <code class="language-plaintext highlighter-rouge">search</code> (similar to previous implementation).</p> <ol> <li> <p><code class="language-plaintext highlighter-rouge">add</code> The only difference from previous is during creating a new node, we add this sentence to the node and rebuild the top 3 sentences. If node already exists, add this sentence to it and rebuild its top 3 sentences.</p> </li> <li> <p><code class="language-plaintext highlighter-rouge">search</code>: similar to Instead of returning a boolean value, return the top 3 sentences of that node.</p> </li> </ol> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://var-nan.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://var-nan.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-02-13T23:26:29+00:00</updated><id>https://var-nan.github.io/feed.xml</id><title type="html">Raja K</title><entry><title type="html">Floyd’s Cycle Detection</title><link href="https://var-nan.github.io/blog/2026/floy-cycle-detection/" rel="alternate" type="text/html" title="Floyd’s Cycle Detection"/><published>2026-02-13T10:00:00+00:00</published><updated>2026-02-13T10:00:00+00:00</updated><id>https://var-nan.github.io/blog/2026/floy-cycle-detection</id><content type="html" xml:base="https://var-nan.github.io/blog/2026/floy-cycle-detection/"><![CDATA[<p>Given a linked list, the question is to find if the linked list contains a cycle or not. If it does contain a cycle, find the start of the cycle.</p> <p><br/></p> <script type="text/tikz">
+\begin{document}
+    \usetikzlibrary{arrows.meta, positioning}
+    \begin{tikzpicture}[
+            node distance=1.8cm,
+            every node/.style={draw, circle, minimum size=1cm},
+            >=Stealth
+        ]
+        % Linear part
+        \node (n1) {1};
+        \node (n2) [right of=n1] {2};
+        \node (n3) [right of=n2] {3};
+        \node (n4) [right of=n3] {4};
+        \node (n5) [below right of=n4] {5};
+
+        % Cycle 
+        \node (n6) [below of=n5] {6};
+        \node (n7) [below left of=n6] {7};
+        \node (n8) [above left of=n7] {8};
+        \node (n9) [above of=n8] {9};
+        \node (head) [draw=none, below of=n1] {\small Head};
+        % Edges (linear part)
+        \draw[->] (n1) -- (n2);
+        \draw[->] (n2) -- (n3);
+        \draw[->] (n3) -- (n4);
+        \draw[->] (n4) -- (n5);
+        % Edges (cycle)
+        \draw[->] (n5) -- (n6);
+        \draw[->] (n6) -- (n7);
+        \draw[->] (n7) -- (n8);
+        \draw[->] (n8) -- (n9);
+        \draw[->] (n9) to (n4);
+
+        \draw[->, pink] (head) to (n1);
+    \end{tikzpicture}
+\end{document}
+</script> <p><br/></p> <p>Simply, we can check if the given linked list contains a cycle or not with a hash map. Start iterating at the <code class="language-plaintext highlighter-rouge">head</code> and keep track of the node (pointers) in a hash map. If a node (pointer) already exists in the hash, then a cycle exists and that pointer will be the start of the cycle. The has $O(N)$ time and $O(N)$ space complexity, where $N$ is the number of nodes in the linked list.</p> <p>Now, if we want to solve the same problem with $O(1)$ memory, we need to use Floyd’s Cycle algorithm or Tortoise and Hare algorithm. In this we use make use of $fast$-and-$slow$ pointer approach.</p> <h2 id="floyds-cycle-detection">Floyd’s Cycle detection</h2> <p>In this algorithm, we make use of $fast$ and $slow$ pointers that both start at the <code class="language-plaintext highlighter-rouge">head</code>. $fast$ pointer moves at $2x$ than $slow$ pointer. These both pointers iterates until either (a) $fast$ becomes <code class="language-plaintext highlighter-rouge">NULL</code> or (b) $fast$ = $slow$. When $fast$ becomes <code class="language-plaintext highlighter-rouge">NULL</code>, it means that there is no cycle. If the linked list has a cycle, then these two pointers meet <em>somewhere</em> on the cycle (proof below). From the below figure, both the pointers meet at Node 7.</p> <details><summary>Click here to know why both pointers meet in a cycle</summary> <p>The relative speed between the $fast$ and $slow$ pointers is 1. Inside the cycle of length $C$, the distance between the $fast$ and $slow$ decreases by 1 and after atmost $C$ steps, both pointers meet.</p> </details> <p><br/></p> <script type="text/tikz">
+        \begin{document}
+    \usetikzlibrary{arrows.meta, positioning}
+        \begin{tikzpicture}[
+            node distance=1.8cm,
+            every node/.style={draw, circle, minimum size=1cm},
+            >=Stealth
+        ]
+        % Linear part
+        \node (n1) {1};
+        \node (n2) [right of=n1] {2};
+        \node (n3) [right of=n2] {3};
+        \node (n4) [right of=n3] {4};
+        \node (n5) [below right of=n4] {5};
+
+        % Cycle 
+        \node (n6) [below of=n5] {6};
+        \node (n7) [below left of=n6] {7};
+        \node (n8) [above left of=n7] {8};
+        \node (n9) [above of=n8] {9};
+        \node (head) [draw=none, below of=n1] {\small Head};
+        % Edges (linear part)
+        \draw[->] (n1) -- (n2);
+        \draw[->] (n2) -- (n3);
+        \draw[->] (n3) -- (n4);
+        \draw[->] (n4) -- (n5);
+        % Edges (cycle)
+        \draw[->] (n5) -- (n6);
+        \draw[->] (n6) -- (n7);
+        \draw[->] (n7) -- (n8);
+        \draw[->] (n8) -- (n9);
+        \draw[->] (n9) to (n4);
+        \draw[->, pink] (head) to (n1);
+
+        \node (sl) [draw=none, left of=n7]{\small Fast};
+        \node (fs) [draw=none, right of = n7] {\small Slow};
+        % Slow and Fast pointers meeting at node 7
+        \draw[->, thick, blue] (sl) to (n7);
+        \draw[->, thick, red] (fs) to (n7);
+        \end{tikzpicture}
+
+    \end{document}
+</script> <p><br/></p> <p>Now the question, how to find the start of the cycle. For this, we need to take a detour into some elementary math to compute the distances travelled by both the pointers.</p> <p>And let $K$ be the distance from the start of the linked list to the start of the cycle and $D$ be the distance from start of the cycle to the point where two pointers meet, and $C$ be the length of cycle. Let $M$ be the distance travelled by the $slow$ pointer when it meets with $fast$ pointer. Since the $fast$ pointer moves at $2x$, its distance will be $2M$.</p> <p>For sake of simplicity, assume that both pointers iterated through the cycle multiple times before they meet. From above, distance travelled by $slow$ pointer is $\begin{equation}M = K + D + C \times i \end{equation}$ and the distance travelled by $fast$ pointer is $\begin{equation} 2M = K + D + C \times j \end{equation}$. Since they both meet after some steps, we can equal both equations, (1) = (2),</p> \[K + D + C \times j = 2 \times (K + D + C \times i)\] \[K + D = C \times (j - 2i)\] <p>$\begin{equation} K + D \equiv 0 \mod C \end{equation}$</p> <p>The above equation (3) tells us that $K + D$ is a multiple of $C$ (length of cycle). It means, when a pointer starts from the <code class="language-plaintext highlighter-rouge">head</code> and another pointer starts from $D$ steps away from the start of the cycle, after exactly $K + D$ steps, they both meet at a location on the cycle where the second pointer initially started.</p> <p><br/></p> <script type="text/tikz">
+    \begin{document}
+        \usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
+        \begin{tikzpicture}[
+            node distance=1.8cm,
+            every node/.style={draw, circle, minimum size=1cm},
+            >=Stealth
+        ]
+            % Linear part
+            \node (n1) {1};
+            \node (n2) [right of=n1] {2};
+            \node (n3) [right of=n2] {3};
+            \node (n4) [right of=n3] {4};
+            \node (n5) [below right of=n4] {5};
+
+            % Cycle 
+            \node (n6) [below of=n5] {6};
+            \node (n7) [below left of=n6] {7};
+            \node (n8) [above left of=n7] {8};
+            \node (n9) [above of=n8] {9};
+            \node (head) [draw=none, below of=n1] {\small Head};
+            % Edges (linear part)
+            \draw[->, green] (n1) -- (n2);
+            \draw[->, green] (n2) -- (n3);
+            \draw[->, green] (n3) -- (n4);
+            \draw[->, violet] (n4) -- (n5);
+            % Edges (cycle)
+            \draw[->, violet] (n5) -- (n6);
+            \draw[->, violet] (n6) -- (n7);
+            \draw[->, orange] (n7) -- (n8);
+            \draw[->, orange] (n8) -- (n9);
+            \draw[->, orange] (n9) to (n4);
+
+            \draw[->, pink] (head) to (n1);
+
+            \node (sl) [draw=none, left of=n7]{\small Fast};
+            \node (fs) [draw=none, right of = n7] {\small Slow};
+            % Slow and Fast pointers meeting at node 7
+            \draw[->, thick, blue] (sl) to (n7);
+            \draw[->, thick, red] (fs) to (n7);
+
+            \node (inv1) [draw=none, right of=n4]{};
+            \node (inv2) [draw=none, right of=n7]{};
+            \node (inv3) [draw=none, above =0.05cm of n1]{};
+            \node (inv4) [draw=none, above =0.05cm of n4]{};
+
+            \draw[decorate,decoration={brace,amplitude=8pt}] 
+                (inv3.north) -- (inv4.north) 
+                node[draw=none, midway, yshift=20pt] {\large $K$};
+
+            \draw[decorate,decoration={brace,amplitude=8pt}, xshift=20pt]
+                (inv1.east) -- (inv2.east)
+                node[draw=none, midway, right=8pt] {\large $D$};
+        \end{tikzpicture}
+    \end{document}
+</script> <p><br/></p> <p>For example, let the $fast$ started at <code class="language-plaintext highlighter-rouge">head</code> and $slow$ started at Node 7 (exactly where it was stopped earlier), then after after $K + D$ steps both pointers meet again at Node 7. Now we don’t know what the value of $K + D$. If we observe the diagram below, since they meet at Node 7, and $fast$ and $slow$ moves at same speed, they must meet at Node 4 and reach to Node 7 together, which indicates that they both meet after $K$ steps and travel $D$ steps together. Thus when the both pointers first meet, its the start of the cycle, which is $K$ steps from the <code class="language-plaintext highlighter-rouge">head</code>.</p> <p>Below is the C++ implementation of Floyd’s cycle detection algorithm. It returns the pointer to the start of the cycle, if exists. Time complexity: $O(N)$ and space complexity $O(1)$.</p> <pre><code class="language-C++">Node *find_cycle_start(Node *head) {
+    if (!head || !head-&gt;next) return nullptr;
+
+    Node *fast = head, *slow = head;
+
+    while (fast &amp;&amp; fast-&gt;next) {
+        fast = fast-&gt;next-&gt;next;
+        slow = slow-&gt;next;
+        if (fast == slow) break;
+    }
+
+    if (!fast) return nullptr;
+
+    // cycle exist, find its start
+    fast = head;
+    while (fast != slow) {
+        fast = fast-&gt;next;
+        slow = slow-&gt;next;
+    }
+    return fast;
+}
+</code></pre> <p>Good Day :)</p>]]></content><author><name></name></author><category term="algorithm"/><category term="cycle-detection"/><category term="linked-list"/><category term="graph"/><summary type="html"><![CDATA[Detecting cycle in a linked list.]]></summary></entry><entry><title type="html">Dynamic Programming + Bitmask</title><link href="https://var-nan.github.io/blog/2025/bitmask-dp/" rel="alternate" type="text/html" title="Dynamic Programming + Bitmask"/><published>2025-10-14T00:00:00+00:00</published><updated>2025-10-14T00:00:00+00:00</updated><id>https://var-nan.github.io/blog/2025/bitmask-dp</id><content type="html" xml:base="https://var-nan.github.io/blog/2025/bitmask-dp/"><![CDATA[<p>Post on bitmask with dynamic programming. coming soon.</p>]]></content><author><name></name></author><category term="algorithms"/><summary type="html"><![CDATA[speeding up search through permutations for smaller inputs.]]></summary></entry><entry><title type="html">Autocompletion using Trie</title><link href="https://var-nan.github.io/blog/2025/auto-completion-system/" rel="alternate" type="text/html" title="Autocompletion using Trie"/><published>2025-10-11T13:05:10+00:00</published><updated>2025-10-11T13:05:10+00:00</updated><id>https://var-nan.github.io/blog/2025/auto-completion-system</id><content type="html" xml:base="https://var-nan.github.io/blog/2025/auto-completion-system/"><![CDATA[<p>In my <a href="../trie">previous post</a>, I introduced the Trie data structure, its basic operations, and how it allows efficient prefix search. Now, I’ll take it one step further and show how Trie can be used to build an autocomplete system.</p> <p>Instead of building a feature-rich autocomplete system, I used the specifications from <a href="https://leetcode.com/problems/design-search-autocomplete-system/description/">Leetcode 642</a> for a trivial autocomplete system.</p> <p>I just noticed <a href="https://leetcode.com/problems/design-search-autocomplete-system/description/">Leetcode 642</a> is behind the premium paywall. Below is the problem description.</p> <blockquote> <p>Design a search autocomplete system for a search engine. Users may input a sentence (atleast one word end with a special character <code class="language-plaintext highlighter-rouge">#</code>). You are given a string array <code class="language-plaintext highlighter-rouge">sentences</code> and an integer array <code class="language-plaintext highlighter-rouge">times</code> both of length <code class="language-plaintext highlighter-rouge">n</code> where <code class="language-plaintext highlighter-rouge">sentences[i]</code> is a previously typed sentence and <code class="language-plaintext highlighter-rouge">times[i]</code> is the corresponding number of times the sentence was typed. For each input character except <code class="language-plaintext highlighter-rouge">#</code>, return the top 3 historical hot sentences that have the same prefix as the part of the sentence already typed. Here are the specific rules:</p> <ul> <li>The hot degree for a sentence is defined as the number of times a user typed the exactly same sentence before.</li> <li>The returned top 3 hot sentences should be sorted by hot degree (The first is the hottest one). If several sentences have the same hot degree, use ASCII-code order (smaller one appears first).</li> <li>If less than 3 hot sentences exist, return as many as you can.</li> <li>When the input is a special character, it means the sentence ends, and in this case, you need to return an empty list. Two functions in the class: <ol> <li><code class="language-plaintext highlighter-rouge">AutocompleteSystem(String[] sentences, int[] times)</code>: Initializes the object with the <code class="language-plaintext highlighter-rouge">sentences</code> and <code class="language-plaintext highlighter-rouge">times</code> arrays.</li> <li><code class="language-plaintext highlighter-rouge">List&lt;String&gt; input(char c)</code> This indicates that the user typed the character <code class="language-plaintext highlighter-rouge">c</code>. Add this character to the already inputted string.</li> </ol> </li> <li>Returns the empty array if <code class="language-plaintext highlighter-rouge">c == '#'</code> and stores the inputted sentence in the sytem.</li> <li>Returns the top 3 historical hot sentence that have the same prefix as the part of sentence already typed. If it has fewer than 3 matches, return them all.</li> </ul> </blockquote> <p>I think the input specification is bit confusing. Below is an example.</p> <p>Given <code class="language-plaintext highlighter-rouge">sentences[] = {"i love cake", "island", "indra", "i like leetcode", "i like biryani"}</code> and <code class="language-plaintext highlighter-rouge">times[] = {3, 2, 4, 1, 4}</code>.</p> <p>If the user first types “i”, then the system should return <code class="language-plaintext highlighter-rouge">["i like biryani", "i like leetcode", "i love cake"]</code>. The result should be sorted by its hot value and then by ascii value upon tie. Later, if user types “p”, the input string becomes “ip”, then the system should return <code class="language-plaintext highlighter-rouge">[]</code>, as no string has “ip” as its prefix. Then, if the user types “#”, the system should assume that input is completed and insert this string into the tree.</p> <h2 id="intuition">Intuition</h2> <p>Every sentence has a score (hot value) associated with it. This is used to rank the qualified sentences. Here, the term <em>qualified</em> means that a string has matching prefix. So, store the top 3 qualified sentences in the Trie node.</p> <p>Maintain a string <code class="language-plaintext highlighter-rouge">s</code> with already inputted characters. On input <code class="language-plaintext highlighter-rouge">c</code>, append it to <code class="language-plaintext highlighter-rouge">s</code>. Start traversing the tree from the root with <code class="language-plaintext highlighter-rouge">s</code>. At the end of traversal, select the node and return top 3 sentences from it. If <code class="language-plaintext highlighter-rouge">#</code> is inputted, add <code class="language-plaintext highlighter-rouge">s</code> to the tree with its score as 1 and reset <code class="language-plaintext highlighter-rouge">s</code>.</p> <h2 id="implementation">Implementation</h2> <p>The implementation <em>slightly</em> seperates the Trie logic from the autocomplete system.</p> <p>The <code class="language-plaintext highlighter-rouge">Node</code> class stores the top 3 sentences for its corresponding prefix. Instead of storing the actual sentences, it stores the sentence Id. This Id can be used to retrieve the actual sentence from the global pool.</p> <p>The <code class="language-plaintext highlighter-rouge">Trie</code> class provides two functions <code class="language-plaintext highlighter-rouge">add</code> and <code class="language-plaintext highlighter-rouge">search</code> (similar to previous implementation).</p> <ol> <li> <p><code class="language-plaintext highlighter-rouge">add</code> The only difference from previous is during creating a new node, we add this sentence to the node and rebuild the top 3 sentences. If node already exists, add this sentence to it and rebuild its top 3 sentences.</p> </li> <li> <p><code class="language-plaintext highlighter-rouge">search</code>: similar to Instead of returning a boolean value, return the top 3 sentences of that node.</p> </li> </ol> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>

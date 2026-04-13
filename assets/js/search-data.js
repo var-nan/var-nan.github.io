@@ -58,7 +58,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/resume/";
               },
-            },{id: "post-floyd-39-s-cycle-detection",
+            },{id: "post-flow-networks",
+        
+          title: "Flow Networks",
+        
+        description: "Finding a flow to push through a network given some constraints.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/network-flows/";
+          
+        },
+      },{id: "post-floyd-39-s-cycle-detection",
         
           title: "Floyd&#39;s Cycle Detection",
         

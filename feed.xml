@@ -1,4 +1,208 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://var-nan.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://var-nan.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-02-13T23:26:29+00:00</updated><id>https://var-nan.github.io/feed.xml</id><title type="html">Raja K</title><entry><title type="html">Floyd’s Cycle Detection</title><link href="https://var-nan.github.io/blog/2026/floy-cycle-detection/" rel="alternate" type="text/html" title="Floyd’s Cycle Detection"/><published>2026-02-13T10:00:00+00:00</published><updated>2026-02-13T10:00:00+00:00</updated><id>https://var-nan.github.io/blog/2026/floy-cycle-detection</id><content type="html" xml:base="https://var-nan.github.io/blog/2026/floy-cycle-detection/"><![CDATA[<p>Given a linked list, the question is to find if the linked list contains a cycle or not. If it does contain a cycle, find the start of the cycle.</p> <p><br/></p> <script type="text/tikz">
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://var-nan.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://var-nan.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-04-13T23:53:21+00:00</updated><id>https://var-nan.github.io/feed.xml</id><title type="html">Raja K</title><entry><title type="html">Flow Networks</title><link href="https://var-nan.github.io/blog/2026/network-flows/" rel="alternate" type="text/html" title="Flow Networks"/><published>2026-03-23T16:00:00+00:00</published><updated>2026-03-23T16:00:00+00:00</updated><id>https://var-nan.github.io/blog/2026/network-flows</id><content type="html" xml:base="https://var-nan.github.io/blog/2026/network-flows/"><![CDATA[<p>A flow network $G = (V,E)$ is a directed graph with set of vertices $V$ and set of edges $E$, where each edge $e \in E$ has a nonnegative capacity $c (e) \geq 0$. There are two distinguished vertices in this network: a <em>source</em> $s$ and a <em>sink</em> $t$ that behave slightly different as we see in a moment. A source vertex has no incoming flow and a sink vertex has no outgoing flow. Below is an example of such a flow network. The numbers on the edges are the capacities of these edges.</p> <script type="text/tikz">
+\begin{document}
+\usetikzlibrary{automata, positioning}
+\tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
+\tikzset{source/.style={fill=green!20}}
+\tikzset{sink/.style={fill=yellow!20}}
+\tikzset{saturated/.style={opacity=0.3}}
+\begin{tikzpicture}
+    \node[vertex, source] (s) {$s$};
+    \node[vertex, above right of=s] (a) {$a$};
+    \node[vertex, below right of=s] (b) {$b$};
+    \node[vertex, right of=a] (c) {$c$};
+    \node[vertex, right of=b] (d) {$d$};
+    \node[vertex, sink, above right of=d] (t) {$t$};
+
+    \path[->] (a) edge[above] node {2} (c);
+    \path[->] (c) edge[above] node {3} (t) edge[above] node {1} (b);
+    \path[->] (s) edge[above] node {3} (a) edge[below] node {2} (b);
+    \path[->] (b) edge[below] node {3} (d) edge [left] node {1} (a);
+    \path[->] (d) edge[below] node {2} (t) edge[left] node {3} (c);
+\end{tikzpicture}
+\end{document}
+</script> <p><br/></p> <p>For simplicity, we assume that there are no self-loops, anti-parallel and parallel edges in the network, though they can be easily resolved and doesn’t affect the final solution.</p> <details><summary>click here to know how to resolve them</summary> <p>We can transform the given graph and introduce dummy nodes to handle remove loops, parallel and anti-parallel edges.</p> </details> <p><br/></p> <p>We define a flow $f$ is a function $f : V \times V \rightarrow R$ that satisfies the following properties.</p> <ul> <li>Capacity Constraint :</li> </ul> \[0 \leq f(u,v) \leq c(u,v) \quad \forall u,v \in V\] <ul> <li>Flow Conservation: total incoming flow at a vertex should be equal to the total outgoing flow, except for $s$ and $t$.</li> </ul> \[\sum_{u\in V} f(u,v) = \sum_{u \in V} f(v,u) \quad \forall u,v \in V \setminus \{s,t\}\] <p>The value $|.|$ of a flow $f$ is defined as</p> \[|f| = \sum_{v\in V} f(s,v) - \sum_{v\in V} f(v,s)\] <p>Given this, the goal of the maximum flow problem is to find a flow of maximum value satisfying the above two constraints.</p> <p>A simple way to find the max flow is to iteratively find an $s - t$ path and push flow as long as an edge can accept additional flow.</p> <p>For the above example, we can find a path $s \rightarrow b \rightarrow a \rightarrow c \rightarrow t$ and push 1 unit of flow, because the minimum capacity is 1 among the edges in this path. The network is updated as below.</p> <script type="text/tikz">
+\begin{document}
+\usetikzlibrary{automata, positioning}
+\tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
+\tikzset{source/.style={fill=green!20}}
+\tikzset{sink/.style={fill=yellow!20}}
+\tikzset{saturated/.style={opacity=0.3}}
+\begin{tikzpicture}
+    \node[vertex, source] (s) {$s$};
+    \node[vertex, above right of=s] (a) {$a$};
+    \node[vertex, below right of=s] (b) {$b$};
+    \node[vertex, right of=a] (c) {$c$};
+    \node[vertex, right of=b] (d) {$d$};
+    \node[vertex, sink, above right of=d] (t) {$t$};
+
+    \path[->] (a) edge[above] node {1:2} (c);
+    \path[->] (c) edge[above] node[sloped] {1:3} (t) edge[above] node {1} (b);
+    \path[->] (s) edge[above] node {3} (a) edge[below] node[sloped] {1:2} (b);
+    \path[->] (b) edge[below] node {3} (d) edge [left] node {1:1} (a);
+    \path[->] (d) edge[below] node[sloped] {2} (t) edge[left] node {3} (c);
+    \draw[red, line width=4pt, opacity=0.4] (s) -- (b) -- (a) -- (c) -- (t);
+\end{tikzpicture}
+\end{document}
+</script> <p>In the next iteration, we can find a path $s \rightarrow a \rightarrow c \rightarrow t$ and push one more unit of flow. Now the edge $a-c$ is at full capacity and cannot accept anymore flow through it.</p> <script type="text/tikz">
+\begin{document}
+\usetikzlibrary{automata, positioning}
+\tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
+\tikzset{source/.style={fill=green!20}}
+\tikzset{sink/.style={fill=yellow!20}}
+\tikzset{saturated/.style={opacity=0.3}}
+\begin{tikzpicture}
+    \node[vertex, source] (s) {$s$};
+    \node[vertex, above right of=s] (a) {$a$};
+    \node[vertex, below right of=s] (b) {$b$};
+    \node[vertex, right of=a] (c) {$c$};
+    \node[vertex, right of=b] (d) {$d$};
+    \node[vertex, sink, above right of=d] (t) {$t$};
+
+    \path[->] (a) edge[above] node {2:2} (c);
+    \path[->] (c) edge[above] node[sloped] {2:3} (t)
+        edge[above] node {1} (b);
+    \path[->] (s) edge[above] node[sloped] {1:3} (a) edge[below] node[sloped] {1:2} (b);
+    \path[->] (b) edge[below] node {3} (d)
+    edge [left] node {1:1} (a);
+    \path[->] (d) edge[below] node[sloped] {2} (t) 
+        edge[left] node {3} (c);
+    \draw[red, line width=4pt, opacity=0.4] (s) -- (a) -- (c) -- (t);
+\end{tikzpicture}
+\end{document}
+</script> <p>Next, one more unit of flow $s \rightarrow b \rightarrow d \rightarrow t$ can be pushed. At this point, three edges $s - b$, $a-c$ and $b-a$ are at full capacity. The current flow value is 3.</p> <script type="text/tikz">
+\begin{document}
+\usetikzlibrary{automata, positioning}
+\tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
+\tikzset{source/.style={fill=green!20}}
+\tikzset{sink/.style={fill=yellow!20}}
+\tikzset{saturated/.style={opacity=0.3}}
+\begin{tikzpicture}
+    \node[vertex, source] (s) {$s$};
+    \node[vertex, above right of=s] (a) {$a$};
+    \node[vertex, below right of=s] (b) {$b$};
+    \node[vertex, right of=a] (c) {$c$};
+    \node[vertex, right of=b] (d) {$d$};
+    \node[vertex, sink, above right of=d] (t) {$t$};
+
+    \path[->] (a) edge[above] node {2:2} (c);
+    \path[->] (c) edge[above] node[sloped] {2:3} (t)
+        edge[above] node {1} (b);
+    \path[->] (s) edge[above] node[sloped] {1:3} (a) edge[below] node[sloped] {2:2} (b);
+    \path[->] (b) edge[below] node {1:3} (d)
+    edge [left] node {1:1} (a);
+    \path[->] (d) edge[below] node[sloped] {1:2} (t) 
+        edge[left] node {3} (c);
+    \draw[red, line width=4pt, opacity=0.4] (s) -- (b) -- (d) -- (t);
+\end{tikzpicture}
+\end{document}
+</script> <p>Now, it looks like we cannot send anymore flow. If we observe carefully, if we divert all the incoming flow at $b$ to $d$, we can push one more unit of flow from $s \rightarrow a \rightarrow c \rightarrow t$. This would increase the total flow to 4.</p> <script type="text/tikz">
+\begin{document}
+\usetikzlibrary{automata, positioning}
+\tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
+\tikzset{source/.style={fill=green!20}}
+\tikzset{sink/.style={fill=yellow!20}}
+\tikzset{saturated/.style={opacity=0.3}}
+\begin{tikzpicture}
+    \node[vertex, source] (s) {$s$};
+    \node[vertex, above right of=s] (a) {$a$};
+    \node[vertex, below right of=s] (b) {$b$};
+    \node[vertex, right of=a] (c) {$c$};
+    \node[vertex, right of=b] (d) {$d$};
+    \node[vertex, sink, above right of=d] (t) {$t$};
+
+    \path[->] (a) edge[above] node {2:2} (c);
+    \path[->] (c) edge[above] node[sloped] {2:3} (t) edge[above] node {1} (b);
+    \path[->] (s) edge[above] node[sloped] {2:3} (a) edge[below] node[sloped] {2:2} (b);
+    \path[->] (b) edge[below] node {2:3} (d) edge [left] node {1} (a);
+    \path[->] (d) edge[below] node[sloped] {2:2} (t) edge[left] node {3} (c);
+    \draw[red, line width=4pt, opacity=0.4] (s) -- (a) -- (c) -- (t);
+    \draw[red, line width=4pt, opacity=0.4] (s) -- (b) -- (d) -- (t);
+\end{tikzpicture}
+\end{document}
+</script> <p>We need a mechanism to <em>undo</em> (or <em>cancel</em>) a flow through an edge and divert it to other edge. So, how to do it? We need to leave some marker points on how to <em>undo</em> flow that’s going through an edge. Using this marker, we can cancel a flow coming through it.</p> <h4 id="residual-network">Residual Network</h4> <p>Given a flow network $G$, and a flow $f$, the <em>residual network</em> $G_f$ consists of edges whose capacities represent how the flow can change on edges of $G$. An edge of $G$ can admit more flow if its capacity is greater than its current flow. We call the current capacity as <em>residual capacity</em> $c_f (u,v) = c(u,v) - f(u,v)$. Only the edges with $c_f &gt; 0$ are present in $G_f$. In addition, if there is a $x$ units of flow in an edge $(u,v) \in E$, then there will be a reverse edge $(v,u) \in E_f$ with capacity $f(u,v)$.</p> <p>Lets formalize this mathematically. Given a flow $f$, the <em>residual capacity</em> $c_f(u,v)$ for a pair of vertices $u,v \in V$ as follows,</p> \[c_f(u,v) = \begin{cases} c(u,v) - f(u,v) &amp; \text{if } (u,v) \in E \\ f(u,v) &amp; \text{if } (v,u) \in E \\ 0 &amp; \text{ otherwise} \end{cases}\] <p>and $G_f = (V, E_f)$ is the residual network after inducing $f$, where</p> \[E_f = \{(u,v) \in V \times V : c_f (u,v) &gt; 0\}\] <p>We established all the required setup to undo a flow in an edge. Now, lets see how it is used in practice.</p> <p><br/></p> <h2 id="ford-fulkerson">Ford-Fulkerson</h2> <p>The basic idea of the Ford-Fulkerson is very simple and is similar to what we did before, iteratively increase the flow in the network by finding a valid $s - t$ path and augmenting it, but the difference is we compute the path in $G_f$ instead of $G$. It terminates when it cannot find a $s - t$ path.</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">FORD</span><span class="o">-</span><span class="n">FULKERSON</span> <span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">edge</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="n">in</span> <span class="n">G</span><span class="p">.</span><span class="n">E</span>
+        <span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">).</span><span class="n">f</span> <span class="o">=</span> <span class="mi">0</span> 
+    <span class="k">while</span> <span class="n">there</span> <span class="n">exists</span> <span class="n">a</span> <span class="n">path</span> <span class="n">from</span> <span class="n">s</span> <span class="n">to</span> <span class="n">t</span> <span class="n">in</span> <span class="n">residual</span> <span class="n">network</span> <span class="n">G_f</span> <span class="p">{</span>
+        <span class="n">c_f</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">=</span> <span class="n">minimum</span> <span class="n">of</span> <span class="n">all</span> <span class="n">the</span> <span class="n">residual</span> <span class="n">capacities</span> <span class="n">of</span> <span class="n">edges</span> <span class="n">on</span> <span class="n">the</span> <span class="n">path</span><span class="p">.</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="n">edge</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="n">in</span> <span class="n">path</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="n">in</span> <span class="n">G</span><span class="p">.</span><span class="n">E</span>
+                <span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">).</span><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">).</span><span class="n">f</span> <span class="o">+</span> <span class="n">cf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">else</span>
+                <span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">u</span><span class="p">).</span><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">u</span><span class="p">).</span><span class="n">f</span> <span class="o">-</span> <span class="n">cf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">f</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>Below is the residual network for the previous example after three iterations.</p> <p>Now, Ford Fulkerson can find a path $s \rightarrow a \rightarrow b \rightarrow d \rightarrow t$. If we augment that path to $G$, then this <em>cancels</em> the flow $a\rightarrow b$ and diverts it to $b\rightarrow d \rightarrow t$. This leaves some space to push additional flow through $a \rightarrow c \rightarrow t$. In the next iteration, Ford Fulkerson can find a path $s \rightarrow a \rightarrow c \rightarrow t$ to induce 1 more unit of flow.</p> <h4 id="analysis">Analysis</h4> <p>If $f^*$ is the maximum flow in the flow network $G$, then the algorithm executes the while loop atmost $|f^*|$ times, since the flow value increases by atleast 1 unit in each iteration and each iteration takes $O(E)$ to compute the path from $s-t$. Thus the time complexity of Ford-Fulkerson method is $O(|f^*| E)$.</p> <p>We don’t want the runtime depends on the flow value. A very small network could have its flow value in billions and the Ford-Fulkerson method can take forever to return an answer. In addition, if we are not careful on how we select augmenting path, we end up doing waste work. To see what it means, let’s look at the following example.</p> <script type="text/tikz">
+\begin{document}
+    \usetikzlibrary{automata, positioning}
+    \tikzset{ vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20} }
+    \tikzset{ source/.style={fill=green!20} }
+    \tikzset{ sink/.style={fill=yellow!20} }
+    \tikzset{ saturated/.style={opacity=0.2} }
+    \tikzset{ residual/.style={magenta!70}}
+
+    \begin{tikzpicture}
+        \node[vertex, source] (s) {$s$};
+        \node[vertex, above right of=s] (a) {$a$};
+        \node[vertex, below right of=s] (b) {$b$};
+        \node[vertex, sink, below right of=a] (t) {$t$};
+
+        \path[->, thick] (s) edge[above, sloped] node {$10^9$} (a) edge[below, sloped] node {$10^9$} (b);
+        \path[->, thick] (a) edge[above, sloped] node {$10^9$} (t) edge [left] node {$1$} (b);
+        \path[->, thick] (b) edge[below, sloped] node {$10^9$} (t);
+    \end{tikzpicture}
+\end{document}
+</script> <p>In this example, if we select the path $s \rightarrow a \rightarrow b \rightarrow t$ and push 1 unit of flow, then the edge $a \rightarrow b$ becomes <em>critical</em> and removed from the residual network.</p> <script type="text/tikz">
+\begin{document}
+    \usetikzlibrary{automata, positioning}
+    \tikzset{ vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20} }
+    \tikzset{ source/.style={fill=green!20} }
+    \tikzset{ sink/.style={fill=yellow!20} }
+    \tikzset{ saturated/.style={opacity=0.2} }
+    \tikzset{ residual/.style={magenta!70}}
+
+    \begin{tikzpicture}
+        \node[vertex, source] (s) {$s$};
+        \node[vertex, above right of=s] (a) {$a$};
+        \node[vertex, below right of=s] (b) {$b$};
+        \node[vertex, sink, below right of=a] (t) {$t$};
+
+        \path[->, thick] (s) edge[above, sloped] node {$10^9-1$} (a) edge[below, sloped] node {$10^9$} (b);
+        \path[->, thick] (a) edge[above, sloped] node {$10^9$} (t) 
+        edge [saturated, left] node {$1$} (b)
+        edge[bend left=15, residual, below] node {1} (s);
+        \path[->, thick] (b) edge[below, sloped] node {$10^9-1$} (t)
+        edge[residual,bend right=15, right] node {1} (a);
+        \path[->, thick] (t) edge[residual, sloped, bend right=15, above] node{1} (b);
+    \end{tikzpicture}
+\end{document}
+</script> <p>In the second iteration, if we select the path $s \rightarrow b \rightarrow a \rightarrow t$ to push 1 unit of flow, the flow from $b$ to $a$ <em>cancels</em> out and the original edge $a \rightarrow b$ comes back in the residual network. The flow is 2.</p> <script type="text/tikz">
+\begin{document}
+    \usetikzlibrary{automata, positioning}
+    \tikzset{ vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20} }
+    \tikzset{ source/.style={fill=green!20} }
+    \tikzset{ sink/.style={fill=yellow!20} }
+    \tikzset{ saturated/.style={opacity=0.2} }
+    \tikzset{ residual/.style={magenta!70}}
+
+    \begin{tikzpicture}
+        \node[vertex, source] (s) {$s$};
+        \node[vertex, above right of=s] (a) {$a$};
+        \node[vertex, below right of=s] (b) {$b$};
+        \node[vertex, sink, below right of=a] (t) {$t$};
+
+        \path[->, thick] (s) edge[above, sloped] node {$10^9-1$} (a) edge[below, sloped] node {$10^9 - 1$} (b);
+        \path[->, thick] (a) edge[above, sloped] node {$10^9-1$} (t) 
+        edge [left] node {$1$} (b)
+        edge[bend left=15, residual, below] node {1} (s);
+        \path[->, thick] (b) edge[below, sloped] node {$10^9-1$} (t)
+        edge [residual, sloped, above, bend right=15] node {1} (s);
+        \path[->, thick] (t) edge[residual, sloped, bend right=15, above] node{1} (b)
+        edge[residual, sloped, bend left=15, below] node {1} (a);
+    \end{tikzpicture}
+\end{document}
+</script> <p>Now, it is possible that the Ford-Fulkerson method (in an unlucky case) to iteratively increase the flow by 1 unit by always selecting these two paths. This would result in $2 \times 10^9$ iterations. But had we chosen the the path $s \rightarrow a \rightarrow t$ and $s \rightarrow b \rightarrow t$, we only need 2 iterations.</p> <p>Next, we see how some cleverness can help us to drastically improve the runtime.</p> <h2 id="edmonds-karp">Edmonds-Karp</h2> <p>Edmonds-Karp algorithm is <em>an</em> implementation of the Ford-Fulkerson method, which always chooses shortest path from $s - t$ by using BFS and augments it to the network. Now, lets see how this help us to improve the runtime. The main intuition behind the Edmonds-Karp’s algorithm is to always select shortest path to avoid long cycles, which helps to bound the number of augmenting paths to $O(VE)$.</p> <details><summary>Click here for detailed proof.</summary> <p><br/></p> <p>Theorem: Total number of flow augmentations in Edmonds-Karp is $O(VE)$.</p> <p>To prove this, we first need to establish a bound on number of times an edge can become \emph{critical}. For this, we have to look closely at the distances of nodes from the source.</p> <p>We define $\delta_f (u,v)$ as the shortest path distance from $u$ to $v$ in $G_f$ where each edge has a unit distance. Let $p = s\leadsto u \rightarrow v \leadsto t$ be a shortest path from $s$ to $t$ in $G_f$, thus $\delta_f (s,v) = \delta_f(s,u) + 1$. And let $u,v$ be the edge that becomes critical after augmenting the path and $f’$ be the new flow. Since, $(u,v)$ is saturated it’ll not be in $G_{f’}$ and a reverse edge $(v,u)$ will be added to $G_{f’}$.</p> <p>For the original edge $(u,v)$ to ever reappear and become critical again later in the process, we first have to push the flow backwards along the reversed edge $(v,u)$ to undo it. In order to push the flow backwards from $v$ to $u$, there must be a shortest path $\hat{p} = s \leadsto v \rightarrow u \leadsto t$ in some $G_{\hat{f}}$ and thus $\delta_{\hat f}(s,u) = \delta_{\hat f}(s,v) +1$.</p> <p>We still need one more piece to prove the theorem. When we find an augmenting path, there will be atleast one critical edge in the path. This critical edge will be removed in the updated residual network $G_{f’}$. Thus the shortest path distance in $G_{f’}$ is non-decreasing, i.e, $\delta_{f’} (s,t) \geq \delta_f(s,t)$. This means that the new distance is at least greater than the old distance $\delta_{\hat f} (s,v) \geq \delta_f(s,v)$</p> \[\begin{align*} \delta_{\hat f} (s,u) &amp;= \delta_{\hat f}(s,v) + 1 \\ &amp;\geq \delta_f (s,v) + 1 \\ &amp;\geq \delta_f (s,u) + 1 + 1\\ &amp;\geq \delta_f (s,u) + 2 \end{align*}\] <p>The above inequality tells us that every time an edge $(u,v)$ becomes re-saturated, its distance from $s$ must have increased by at least 2.</p> <p>Knowing that a simple path cannot be longer than the total number of vertices $V$ (without using a cycle, which the BFS avoids) and distance increases by at least 2 every time an edge is re-saturated, an edge can only become critical at most $V/2$ times before it becomes unreachable.</p> <p>If a single edge can be critical at most $ V/2 $ times, and we have $E$ edges in the network. So there can be at most $(VE)/2 \in O(VE)$ total bottlenecks across the entire run of the algorithm.</p> </details> <p>We know that the time complexity of BFS is $O(V+E)$. Given that all the nodes in the network has atleast one incoming and one outgoing edges (except $s$ and $t$), so $|E| &gt; |V|$ and the time complexity simplifies to $O(E)$. There are at most $O(VE)$ iterations of BFS, thus Edmonds-Karp takes $O(VE^2)$ time.</p> <h2 id="applications">Applications</h2> <p>Flow networks show up in many real-world problems in computer science and operations research. Below are some,</p> <ul> <li> <p>Transportation and Logistics: Flow networks are widely used to optimize the movement of goods through transportation systems. Nodes can represent warehouses, distribution centers, or retail stores, while edges represent routes with capacity constraints. By computing maximum flow or minimum-cost flow, companies can determine the most efficient way to ship products while avoiding bottlenecks.</p> </li> <li> <p>Communication and Data Networks: In computer networks, flow models help determine how data should be routed to maximize throughput and minimize congestion. Problems such as bandwidth allocation, packet routing, and network reliability can all be framed as flow problems, ensuring efficient use of infrastructure.</p> </li> <li> <p>Bipartite Matching and Assignment: Many assignment problems can be reduced to flow networks. For example, matching workers to jobs, students to schools, or tasks to machines can be modeled as a bipartite graph and solved using max-flow techniques. This ensures an optimal assignment under given constraints.</p> </li> </ul>]]></content><author><name></name></author><category term="Graphs"/><category term="graph"/><category term="optimization"/><summary type="html"><![CDATA[Finding a flow to push through a network given some constraints.]]></summary></entry><entry><title type="html">Floyd’s Cycle Detection</title><link href="https://var-nan.github.io/blog/2026/floy-cycle-detection/" rel="alternate" type="text/html" title="Floyd’s Cycle Detection"/><published>2026-02-13T10:00:00+00:00</published><updated>2026-02-13T10:00:00+00:00</updated><id>https://var-nan.github.io/blog/2026/floy-cycle-detection</id><content type="html" xml:base="https://var-nan.github.io/blog/2026/floy-cycle-detection/"><![CDATA[<p>Given a linked list, the question is to find if the linked list contains a cycle or not. If it does contain a cycle, find the start of the cycle.</p> <p><br/></p> <script type="text/tikz">
 \begin{document}
     \usetikzlibrary{arrows.meta, positioning}
     \begin{tikzpicture}[
@@ -259,7 +463,15 @@
         <span class="k">return</span> <span class="n">trie</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">curr_word</span><span class="p">,</span> <span class="n">sentences</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">};</span>
-</code></pre></div></div> <p><sub><sup>This code can be pasted in the leetcode submission. ( ͡° ͜ʖ ͡°) </sup></sub></p> <p>Good day. o7</p>]]></content><author><name></name></author><category term="Trees"/><category term="LLD"/><category term="trie"/><category term="string"/><summary type="html"><![CDATA[a trivial autocompletion using Trie]]></summary></entry><entry><title type="html">A gentle introduction to Trie.</title><link href="https://var-nan.github.io/blog/2025/trie/" rel="alternate" type="text/html" title="A gentle introduction to Trie."/><published>2025-10-09T16:00:00+00:00</published><updated>2025-10-09T16:00:00+00:00</updated><id>https://var-nan.github.io/blog/2025/trie</id><content type="html" xml:base="https://var-nan.github.io/blog/2025/trie/"><![CDATA[<p>Have you ever wondered how your phone’s keyboard suggests the next character in the word or how your search engine autocompletes your query almost instantly? While a standard Binary Search Tree (BST) or a Hashmap (Dictionary in Python) can store and retrieve words, the Trie (from Re<strong>Trie</strong>val) is often the unsung hero behind lightning-fast text processing applications. It allows for highly efficient storage and searching of strings.</p> <h2 id="what-exactly-is-a-trie">What exactly is a Trie?</h2> <p>A Trie is a tree-like data structure used to store dynamic set of strings. Unlike a BST where the nodes store the full key (text), a node in the Trie only stores a character or a prefix of the string. It is also called as Prefix Tree. The position of the node in a Trie defines the key associated with it. The node also stores pointers to the children nodes each corresponding to next element in the word. Every path from the root to a node represents a unique prefix (refer figure below).</p> <div class="container"> <div class="row"> <div class="col-sm"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/trie-480.webp 480w,/assets/img/trie-800.webp 800w,/assets/img/trie-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/trie.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> </div> <div class="col-sm"> </div> </div> </div> <h2 id="api">API</h2> <p>The Trie API typically constists of two fundamental operations, <code class="language-plaintext highlighter-rouge">add (word)</code> and <code class="language-plaintext highlighter-rouge">search (word)</code>.</p> <ol> <li> <p><code class="language-plaintext highlighter-rouge">add (word)</code>: To insert a word, start from the root node and move downward by following the corresponding child pointers for each character. If at any point a required child pointer doesn’t exist, create a new node for it and continue the traversal until all characters in the word are processed.</p> </li> <li> <p><code class="language-plaintext highlighter-rouge">search (word)</code>: The process is similar to <code class="language-plaintext highlighter-rouge">add</code>. Start from the root and traverse through the Trie following the child pointers for each character in the word. If a required child pointer is missing at any point, it means the word is not present in the Trie. Only its prefix may exist.</p> </li> </ol> <h2 id="implementation">Implementation</h2> <p>Below is a typical implementation of Trie in C++. I assumed that the alphabet set consists only of lowercase english characters to simplify managing and accessing child pointers. But it can be extended to support additional characters. Hashmaps can also be used instead of pre-defined arrays to store the child pointers.</p> <p><sub><sup>I assume the reader knows how to read C-family typed-languages.</sup></sub></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Node</span> <span class="p">{</span>
+</code></pre></div></div> <p><sub><sup>This code can be pasted in the leetcode submission. ( ͡° ͜ʖ ͡°) </sup></sub></p> <p>Good day. o7</p>]]></content><author><name></name></author><category term="Trees"/><category term="LLD"/><category term="trie"/><category term="string"/><summary type="html"><![CDATA[a trivial autocompletion using Trie]]></summary></entry><entry><title type="html">A gentle introduction to Trie.</title><link href="https://var-nan.github.io/blog/2025/trie/" rel="alternate" type="text/html" title="A gentle introduction to Trie."/><published>2025-10-09T16:00:00+00:00</published><updated>2025-10-09T16:00:00+00:00</updated><id>https://var-nan.github.io/blog/2025/trie</id><content type="html" xml:base="https://var-nan.github.io/blog/2025/trie/"><![CDATA[<p>Have you ever wondered how your phone’s keyboard suggests the next character in the word or how your search engine autocompletes your query almost instantly? While a standard Binary Search Tree (BST) or a Hashmap (Dictionary in Python) can store and retrieve words, the Trie (from Re<strong>Trie</strong>val) is often the unsung hero behind lightning-fast text processing applications. It allows for highly efficient storage and searching of strings.</p> <h2 id="what-exactly-is-a-trie">What exactly is a Trie?</h2> <p>A Trie is a tree-like data structure used to store dynamic set of strings. Unlike a BST where the nodes store the full key (text), a node in the Trie only stores a character or a prefix of the string. It is also called as Prefix Tree. The position of the node in a Trie defines the key associated with it. The node also stores pointers to the children nodes each corresponding to next element in the word. Every path from the root to a node represents a unique prefix (refer figure below). Below is a trie built from six words [ARP, ARM, AMD, APP, ]</p> <pre><code class="language-mermaid">graph TB;
+    A((A))---R1((R))
+    R1---P1((P))
+    A---P2((P))
+    P2---R2((R))
+    P2---P3((P))
+    A---M((M))
+    M---D((D))
+</code></pre> <div class="container"> <div class="row"> <div class="col-sm"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/trie-480.webp 480w,/assets/img/trie-800.webp 800w,/assets/img/trie-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/trie.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> </div> <div class="col-sm"> </div> </div> </div> <h2 id="api">API</h2> <p>The Trie API typically constists of two fundamental operations, <code class="language-plaintext highlighter-rouge">add (word)</code> and <code class="language-plaintext highlighter-rouge">search (word)</code>.</p> <ol> <li> <p><code class="language-plaintext highlighter-rouge">add (word)</code>: To insert a word, start from the root node and move downward by following the corresponding child pointers for each character. If at any point a required child pointer doesn’t exist, create a new node for it and continue the traversal until all characters in the word are processed.</p> </li> <li> <p><code class="language-plaintext highlighter-rouge">search (word)</code>: The process is similar to <code class="language-plaintext highlighter-rouge">add</code>. Start from the root and traverse through the Trie following the child pointers for each character in the word. If a required child pointer is missing at any point, it means the word is not present in the Trie. Only its prefix may exist.</p> </li> </ol> <h2 id="implementation">Implementation</h2> <p>Below is a typical implementation of Trie in C++. I assumed that the alphabet set consists only of lowercase english characters to simplify managing and accessing child pointers. But it can be extended to support additional characters. Hashmaps can also be used instead of pre-defined arrays to store the child pointers.</p> <p><sub><sup>I assume the reader knows how to read C-family typed-languages.</sup></sub></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Node</span> <span class="p">{</span>
 <span class="nl">public:</span>
     <span class="kt">char</span> <span class="n">letter</span><span class="p">;</span>
     <span class="n">Node</span> <span class="o">*</span><span class="n">childs</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>

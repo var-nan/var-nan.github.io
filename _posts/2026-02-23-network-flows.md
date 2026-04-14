@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: distill
 title: Flow Networks
 date: 2026-03-23 16:00:00
 description: Finding a flow to push through a network given some constraints.
@@ -46,7 +46,7 @@ A flow network $G = (V,E)$ is a directed graph with set of vertices $V$ and set 
 For simplicity, we assume that there are no self-loops, anti-parallel and parallel edges in the network, though they can be easily resolved and doesn't affect the final solution.
 
 {% details click here to know how to resolve them %}
-We can transform the given graph and introduce dummy nodes to handle remove loops, parallel and anti-parallel edges.
+We can transform the given graph and introduce dummy nodes to handle loops, parallel and anti-parallel edges.
 {% enddetails %}
 
 <br>
@@ -330,17 +330,16 @@ Edmonds-Karp algorithm is *an* implementation of the Ford-Fulkerson method, whic
 
 
 {% details Click here for detailed proof. %}
-<br>
 
-Theorem: Total number of flow augmentations in Edmonds-Karp is $O(VE)$.
+* Theorem: Total number of flow augmentations in Edmonds-Karp is $O(VE)$.
 
-To prove this, we first need to establish a bound on number of times an edge can become \emph{critical}. For this, we have to look closely at the distances of nodes from the source. 
+To prove this, we first need to establish a bound on number of times an edge can become _critical_. For this, we have to look closely at the distances of nodes from the source. 
 
-We define $\delta_f (u,v)$ as the shortest path distance from $u$ to $v$ in $G_f$ where each edge has a unit distance.  Let $p = s\leadsto u \rightarrow v \leadsto t$ be a shortest path from $s$ to $t$ in $G_f$, thus $\delta_f (s,v) = \delta_f(s,u) + 1$. And let $u,v$ be the edge that becomes critical after augmenting the path and $f'$ be the new flow. Since, $(u,v)$ is saturated it'll not be in $G_{f'}$ and a reverse edge $(v,u)$ will be added to $G_{f'}$.
+We define $\delta_f (u,v)$ as the shortest path distance from $u$ to $v$ in $G_f$ where each edge has a unit distance.  Let $p = s\leadsto u \rightarrow v \leadsto t$ be a shortest path from $s$ to $t$ in $G_f$, thus $\delta_f (s,v) = \delta_f(s,u) + 1$. And let $u,v$ be the edge that becomes _critical_ after augmenting the path and $f'$ be the new flow. Since, $(u,v)$ is saturated it'll not be in $G_{f'}$ and a reverse edge $(v,u)$ will be added to $G_{f'}$.
 
-For the original edge $(u,v)$ to ever reappear and become critical again later in the process, we first have to push the flow backwards along the reversed edge $(v,u)$ to undo it. In order to push the flow backwards from $v$ to $u$, there must be a shortest path $\hat{p} = s \leadsto v \rightarrow u \leadsto t$ in some $G_{\hat{f}}$ and thus $\delta_{\hat f}(s,u) = \delta_{\hat f}(s,v) +1$.
+For the original edge $(u,v)$ to ever reappear and become _critical_ again later in the process, we first have to push the flow backwards along the reversed edge $(v,u)$ to undo it. In order to push the flow backwards from $v$ to $u$, there must be a shortest path $\hat{p} = s \leadsto v \rightarrow u \leadsto t$ in some $G_{\hat{f}}$ and thus $\delta_{\hat f}(s,u) = \delta_{\hat f}(s,v) +1$.
 
-We still need one more piece to prove the theorem. When we find an augmenting path, there will be atleast one critical edge in the path. This critical edge will be removed in the updated residual network $G_{f'}$. Thus the shortest path distance in $G_{f'}$ is non-decreasing, i.e, $\delta_{f'} (s,t) \geq \delta_f(s,t)$. This means that the new distance is at least greater than the old distance $\delta_{\hat f} (s,v) \geq \delta_f(s,v)$
+We still need one more piece to prove the theorem. When we find an augmenting path, there will be atleast one _critical_ edge in the path. This _critical_ edge will be removed in the updated residual network $G_{f'}$. Thus the shortest path distance in $G_{f'}$ is non-decreasing, i.e, $\delta_{f'} (s,t) \geq \delta_f(s,t)$. This means that the new distance is at least greater than the old distance $\delta_{\hat f} (s,v) \geq \delta_f(s,v)$
 
 
 $$
@@ -355,9 +354,9 @@ $$
 
 The above inequality tells us that every time an edge $(u,v)$ becomes re-saturated, its distance from $s$ must have increased by at least 2. 
 
-Knowing that a simple path cannot be longer than the total number of vertices $V$ (without using a cycle, which the BFS avoids) and distance increases by at least 2 every time an edge is re-saturated, an edge can only become critical at most $V/2$ times before it becomes unreachable.
+Knowing that a simple path cannot be longer than the total number of vertices $V$ (without using a cycle, which the BFS avoids) and distance increases by at least 2 every time an edge is re-saturated, an edge can only become _critical_ at most $V/2$ times before it becomes unreachable.
 
-If a single edge can be critical at most $ V/2 $ times, and we have $E$ edges in the network. So there can be at most $(VE)/2 \in O(VE)$ total bottlenecks across the entire run of the algorithm.
+If a single edge can be _critical_ at most $ V/2 $ times, and we have $E$ edges in the network. So there can be at most $(VE)/2 \in O(VE)$ total bottlenecks across the entire run of the algorithm.
 
 {% enddetails %}
 

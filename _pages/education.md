@@ -19,8 +19,8 @@ Iowa State University $\quad | \quad$ Ames, Iowa $\quad | \quad$ GPA: 3.86/4.0 $
     * Operating Systems
     * Software for Large Datasets
     * Quantum Computing
-* Committee: [Dr. Danial Davarnia](https://sites.google.com/view/danialdavarnia) (advisor), [Dr. Ali Jannesari](https://sites.google.com/view/danialdavarnia) (advisor), [Dr. Liyi Li](https://faculty.sites.iastate.edu/liyili2/)
-* Thesis: [Parallel, lock-free framework for Decision Diagram based Search](https://var-nan.github.io)
+* Committee: [Dr. Danial Davarnia](https://sites.google.com/view/danialdavarnia) (advisor), [Dr. Ali Jannesari](https://swapp.cs.iastate.edu/people/ali-jannesari) (advisor), [Dr. Liyi Li](https://faculty.sites.iastate.edu/liyili2/)
+* Thesis: [Parallel, lock-free framework for Decision Diagram based Search](https://dr.lib.iastate.edu/handle/20.500.12876/Yr3KA62r)
 
 ### Bachelor of Engineering (BE) - Aerospace Engineering
 Hindustan University $\quad | \quad$ Chennai, India $\quad | \quad$ July 2017 -- May 2021

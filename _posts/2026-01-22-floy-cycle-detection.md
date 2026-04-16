@@ -1,11 +1,14 @@
 ---
-layout: post
+layout: distill
 title: Floyd's Cycle Detection
 date: 2026-02-13 10:00:00
 description: Detecting cycle in a linked list.
 tags: cycle-detection linked-list graph
 categories: algorithm
+featured: true
 tikzjax: true
+header-includes:
+    - \usepackage{tikz}
 ---
 
 Given a linked list, the question is to find if the linked list contains a cycle or not. If it does contain a cycle, find the start of the cycle. 

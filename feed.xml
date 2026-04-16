@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://var-nan.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://var-nan.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-04-14T01:25:37+00:00</updated><id>https://var-nan.github.io/feed.xml</id><title type="html">Raja K</title><entry><title type="html">Flow Networks</title><link href="https://var-nan.github.io/blog/2026/network-flows/" rel="alternate" type="text/html" title="Flow Networks"/><published>2026-03-23T16:00:00+00:00</published><updated>2026-03-23T16:00:00+00:00</updated><id>https://var-nan.github.io/blog/2026/network-flows</id><content type="html" xml:base="https://var-nan.github.io/blog/2026/network-flows/"><![CDATA[<p>A flow network $G = (V,E)$ is a directed graph with set of vertices $V$ and set of edges $E$, where each edge $e \in E$ has a nonnegative capacity $c (e) \geq 0$. There are two distinguished vertices in this network: a <em>source</em> $s$ and a <em>sink</em> $t$ that behave slightly different as we see in a moment. A source vertex has no incoming flow and a sink vertex has no outgoing flow. Below is an example of such a flow network. The numbers on the edges are the capacities of these edges.</p> <script type="text/tikz">
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://var-nan.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://var-nan.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-04-16T13:01:00+00:00</updated><id>https://var-nan.github.io/feed.xml</id><title type="html">Raja K</title><entry><title type="html">Flow Networks</title><link href="https://var-nan.github.io/blog/2026/network-flows/" rel="alternate" type="text/html" title="Flow Networks"/><published>2026-03-23T16:00:00+00:00</published><updated>2026-03-23T16:00:00+00:00</updated><id>https://var-nan.github.io/blog/2026/network-flows</id><content type="html" xml:base="https://var-nan.github.io/blog/2026/network-flows/"><![CDATA[<p>A flow network $G = (V,E)$ is a directed graph with set of vertices $V$ and set of edges $E$, where each edge $e \in E$ has a nonnegative capacity $c (e) \geq 0$. There are two distinguished vertices in this network: a <em>source</em> $s$ and a <em>sink</em> $t$ that behave slightly different as we see in a moment. A source vertex has no incoming flow and a sink vertex has no outgoing flow. Below is an example of such a flow network. The numbers on the edges are the capacities of these edges.</p> <script type="text/tikz">
 \begin{document}
 \usetikzlibrary{automata, positioning}
 \tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
@@ -13,14 +13,34 @@
     \node[vertex, right of=b] (d) {$d$};
     \node[vertex, sink, above right of=d] (t) {$t$};
 
-    \path[->] (a) edge[above] node {2} (c);
-    \path[->] (c) edge[above] node {3} (t) edge[above] node {1} (b);
-    \path[->] (s) edge[above] node {3} (a) edge[below] node {2} (b);
-    \path[->] (b) edge[below] node {3} (d) edge [left] node {1} (a);
-    \path[->] (d) edge[below] node {2} (t) edge[left] node {3} (c);
+    \path[->, thick] (a) edge[above] node {2} (c);
+    \path[->, thick] (c) edge[above] node {3} (t) edge[above] node {1} (b);
+    \path[->, thick] (s) edge[above] node {3} (a) edge[below] node {2} (b);
+    \path[->, thick] (b) edge[below] node {3} (d) edge [left] node {1} (a);
+    \path[->, thick] (d) edge[below] node {2} (t) edge[left] node {3} (c);
 \end{tikzpicture}
 \end{document}
-</script> <p><br/></p> <p>For simplicity, we assume that there are no self-loops, anti-parallel and parallel edges in the network, though they can be easily resolved and doesn’t affect the final solution.</p> <details><summary>click here to know how to resolve them</summary> <p>We can transform the given graph and introduce dummy nodes to handle loops, parallel and anti-parallel edges.</p> </details> <p><br/></p> <p>We define a flow $f$ is a function $f : V \times V \rightarrow R$ that satisfies the following properties.</p> <ul> <li>Capacity Constraint :</li> </ul> \[0 \leq f(u,v) \leq c(u,v) \quad \forall u,v \in V\] <ul> <li>Flow Conservation: total incoming flow at a vertex should be equal to the total outgoing flow, except for $s$ and $t$.</li> </ul> \[\sum_{u\in V} f(u,v) = \sum_{u \in V} f(v,u) \quad \forall u,v \in V \setminus \{s,t\}\] <p>The value $|.|$ of a flow $f$ is defined as</p> \[|f| = \sum_{v\in V} f(s,v) - \sum_{v\in V} f(v,s)\] <p>Given this, the goal of the maximum flow problem is to find a flow of maximum value satisfying the above two constraints.</p> <p>A simple way to find the max flow is to iteratively find an $s - t$ path and push flow as long as an edge can accept additional flow.</p> <p>For the above example, we can find a path $s \rightarrow b \rightarrow a \rightarrow c \rightarrow t$ and push 1 unit of flow, because the minimum capacity is 1 among the edges in this path. The network is updated as below.</p> <script type="text/tikz">
+</script> <p><br/></p> <p>For simplicity, we assume that there are no self-loops, anti-parallel and parallel edges in the network, though they can be easily resolved and doesn’t affect the final solution.</p> <details><summary>how to resolve?</summary> <p>We can transform the given graph to handle loops, parallel and anti-parallel edges. We can combine parallel edges between two nodes into a single edge with combined capacity. This will preserve overall capacity.</p> <p>To handle anti-parallel edges, we can introduce dummy node and make the anti-parallel edge to pass through the dummy node.</p> <script type="text/tikz">
+\begin{document}
+\usetikzlibrary{automata, positioning}
+\tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, }}
+\begin{tikzpicture}
+    \node[vertex] (a) {$a$};
+    \node[vertex, right of=a] (b) {$b$};
+    \node[right of=b, thick] (r) {$\longrightarrow$};
+    \node[vertex, right of=r] (x) {$a$};
+    \node[vertex, below right of=x] (z) {$c$};
+    \node[vertex, above right of=z] (y) {$b$};
+
+    \path[->] (a) edge[above, bend left=20] node{2} (b);
+    \path[->] (b) edge[below, bend left=20] node{3} (a);
+    \path[->] (x) edge[below] node{2} (y);
+    \path[->] (y) edge[below] node{3} (z);
+    \path[->] (z) edge[above] node{3} (x);
+
+\end{tikzpicture}
+\end{document}
+</script> <p>Similarly, we can handle a self loop with two dummy nodes.</p> </details> <p><br/></p> <p>We define a flow $f$ is a function $f : V \times V \rightarrow R$ that satisfies the following properties.</p> <ul> <li>Capacity Constraint :</li> </ul> \[0 \leq f(u,v) \leq c(u,v) \quad \forall u,v \in V\] <ul> <li>Flow Conservation: total incoming flow at a vertex should be equal to the total outgoing flow, except for $s$ and $t$.</li> </ul> \[\sum_{u\in V} f(u,v) = \sum_{u \in V} f(v,u) \quad \forall u,v \in V \setminus \{s,t\}\] <p>The value $|.|$ of a flow $f$ is defined as</p> \[|f| = \sum_{v\in V} f(s,v) - \sum_{v\in V} f(v,s)\] <p>Given this, the goal of the maximum flow problem is to find a flow of maximum value satisfying the above two constraints.</p> <p>A simple way to find the max flow is to iteratively find an $s - t$ path and push flow as long as an edge can accept additional flow.</p> <p>For the above example, we can find a path $s \rightarrow b \rightarrow a \rightarrow c \rightarrow t$ and push 1 unit of flow, because the minimum capacity is 1 among the edges in this path. The network is updated as below.</p> <script type="text/tikz">
 \begin{document}
 \usetikzlibrary{automata, positioning}
 \tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
@@ -35,11 +55,11 @@
     \node[vertex, right of=b] (d) {$d$};
     \node[vertex, sink, above right of=d] (t) {$t$};
 
-    \path[->] (a) edge[above] node {1:2} (c);
-    \path[->] (c) edge[above] node[sloped] {1:3} (t) edge[above] node {1} (b);
-    \path[->] (s) edge[above] node {3} (a) edge[below] node[sloped] {1:2} (b);
-    \path[->] (b) edge[below] node {3} (d) edge [left] node {1:1} (a);
-    \path[->] (d) edge[below] node[sloped] {2} (t) edge[left] node {3} (c);
+    \path[->, thick] (a) edge[above] node {1:2} (c);
+    \path[->, thick] (c) edge[above] node[sloped] {1:3} (t) edge[above] node {1} (b);
+    \path[->, thick] (s) edge[above] node {3} (a) edge[below] node[sloped] {1:2} (b);
+    \path[->, thick] (b) edge[below] node {3} (d) edge [left] node {1:1} (a);
+    \path[->, thick] (d) edge[below] node[sloped] {2} (t) edge[left] node {3} (c);
     \draw[red, line width=4pt, opacity=0.4] (s) -- (b) -- (a) -- (c) -- (t);
 \end{tikzpicture}
 \end{document}
@@ -58,13 +78,13 @@
     \node[vertex, right of=b] (d) {$d$};
     \node[vertex, sink, above right of=d] (t) {$t$};
 
-    \path[->] (a) edge[above] node {2:2} (c);
-    \path[->] (c) edge[above] node[sloped] {2:3} (t)
+    \path[->, thick] (a) edge[above] node {2:2} (c);
+    \path[->, thick] (c) edge[above] node[sloped] {2:3} (t)
         edge[above] node {1} (b);
-    \path[->] (s) edge[above] node[sloped] {1:3} (a) edge[below] node[sloped] {1:2} (b);
-    \path[->] (b) edge[below] node {3} (d)
+    \path[->, thick] (s) edge[above] node[sloped] {1:3} (a) edge[below] node[sloped] {1:2} (b);
+    \path[->, thick] (b) edge[below] node {3} (d)
     edge [left] node {1:1} (a);
-    \path[->] (d) edge[below] node[sloped] {2} (t) 
+    \path[->, thick] (d) edge[below] node[sloped] {2} (t) 
         edge[left] node {3} (c);
     \draw[red, line width=4pt, opacity=0.4] (s) -- (a) -- (c) -- (t);
 \end{tikzpicture}
@@ -84,18 +104,18 @@
     \node[vertex, right of=b] (d) {$d$};
     \node[vertex, sink, above right of=d] (t) {$t$};
 
-    \path[->] (a) edge[above] node {2:2} (c);
-    \path[->] (c) edge[above] node[sloped] {2:3} (t)
+    \path[->, thick] (a) edge[above] node {2:2} (c);
+    \path[->, thick] (c) edge[above] node[sloped] {2:3} (t)
         edge[above] node {1} (b);
-    \path[->] (s) edge[above] node[sloped] {1:3} (a) edge[below] node[sloped] {2:2} (b);
-    \path[->] (b) edge[below] node {1:3} (d)
+    \path[->, thick] (s) edge[above] node[sloped] {1:3} (a) edge[below] node[sloped] {2:2} (b);
+    \path[->, thick] (b) edge[below] node {1:3} (d)
     edge [left] node {1:1} (a);
-    \path[->] (d) edge[below] node[sloped] {1:2} (t) 
+    \path[->, thick] (d) edge[below] node[sloped] {1:2} (t) 
         edge[left] node {3} (c);
     \draw[red, line width=4pt, opacity=0.4] (s) -- (b) -- (d) -- (t);
 \end{tikzpicture}
 \end{document}
-</script> <p>Now, it looks like we cannot send anymore flow. If we observe carefully, if we divert all the incoming flow at $b$ to $d$, we can push one more unit of flow from $s \rightarrow a \rightarrow c \rightarrow t$. This would increase the total flow to 4.</p> <script type="text/tikz">
+</script> <p>Now, it looks like we cannot send anymore flow. If we observe carefully, if we <em>undo</em> the initial 1 unit of flow through $s \rightarrow b \rightarrow a \rightarrow c \rightarrow t$, there’ll be a room to push additional flow through $a \rightarrow c$. Then we can push one unit of flow through $s \rightarrow a \rightarrow c \rightarrow t$ and one unit through $s \rightarrow b \rightarrow d \rightarrow t$. This would increase the total flow to 4. Below is the paths in the network.</p> <script type="text/tikz">
 \begin{document}
 \usetikzlibrary{automata, positioning}
 \tikzset{vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
@@ -110,16 +130,32 @@
     \node[vertex, right of=b] (d) {$d$};
     \node[vertex, sink, above right of=d] (t) {$t$};
 
-    \path[->] (a) edge[above] node {2:2} (c);
-    \path[->] (c) edge[above] node[sloped] {2:3} (t) edge[above] node {1} (b);
-    \path[->] (s) edge[above] node[sloped] {2:3} (a) edge[below] node[sloped] {2:2} (b);
-    \path[->] (b) edge[below] node {2:3} (d) edge [left] node {1} (a);
-    \path[->] (d) edge[below] node[sloped] {2:2} (t) edge[left] node {3} (c);
+    \path[->, thick] (a) edge[above] node {2:2} (c);
+    \path[->, thick] (c) edge[above] node[sloped] {2:3} (t) edge[above] node {1} (b);
+    \path[->, thick] (s) edge[above] node[sloped] {2:3} (a) edge[below] node[sloped] {2:2} (b);
+    \path[->, thick] (b) edge[below] node {2:3} (d) edge [left] node {1} (a);
+    \path[->, thick] (d) edge[below] node[sloped] {2:2} (t) edge[left] node {3} (c);
     \draw[red, line width=4pt, opacity=0.4] (s) -- (a) -- (c) -- (t);
     \draw[red, line width=4pt, opacity=0.4] (s) -- (b) -- (d) -- (t);
 \end{tikzpicture}
 \end{document}
-</script> <p>We need a mechanism to <em>undo</em> (or <em>cancel</em>) a flow through an edge and divert it to other edge. So, how to do it? We need to leave some marker points on how to <em>undo</em> flow that’s going through an edge. Using this marker, we can cancel a flow coming through it.</p> <h4 id="residual-network">Residual Network</h4> <p>Given a flow network $G$, and a flow $f$, the <em>residual network</em> $G_f$ consists of edges whose capacities represent how the flow can change on edges of $G$. An edge of $G$ can admit more flow if its capacity is greater than its current flow. We call the current capacity as <em>residual capacity</em> $c_f (u,v) = c(u,v) - f(u,v)$. Only the edges with $c_f &gt; 0$ are present in $G_f$. In addition, if there is a $x$ units of flow in an edge $(u,v) \in E$, then there will be a reverse edge $(v,u) \in E_f$ with capacity $f(u,v)$.</p> <p>Lets formalize this mathematically. Given a flow $f$, the <em>residual capacity</em> $c_f(u,v)$ for a pair of vertices $u,v \in V$ as follows,</p> \[c_f(u,v) = \begin{cases} c(u,v) - f(u,v) &amp; \text{if } (u,v) \in E \\ f(u,v) &amp; \text{if } (v,u) \in E \\ 0 &amp; \text{ otherwise} \end{cases}\] <p>and $G_f = (V, E_f)$ is the residual network after inducing $f$, where</p> \[E_f = \{(u,v) \in V \times V : c_f (u,v) &gt; 0\}\] <p>We established all the required setup to undo a flow in an edge. Now, lets see how it is used in practice.</p> <p><br/></p> <h2 id="ford-fulkerson">Ford-Fulkerson</h2> <p>The basic idea of the Ford-Fulkerson is very simple and is similar to what we did before, iteratively increase the flow in the network by finding a valid $s - t$ path and augmenting it, but the difference is we compute the path in $G_f$ instead of $G$. It terminates when it cannot find a $s - t$ path.</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">FORD</span><span class="o">-</span><span class="n">FULKERSON</span> <span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+</script> <p>We need a mechanism to <em>undo</em> (or <em>cancel</em>) a flow through an edge and divert it to other edge. So, how to do it? We need to leave some marker points on how to <em>undo</em> flow that’s going through an edge. Using this, we can <em>cancel</em> a part of the flow later if we decide it. We introduce a new type of edge called <em>Residual Edge</em> in the network that tracks how much flow we can send in reverse. Say if $2$ units of flow is sent through $x \rightarrow y$, then we add a reverse edge $y \rightarrow x$ in the network with value $2$. Later, if we choose this path $y \rightarrow x$ and push some flow through it, it cancels the incoming flow $x \rightarrow y$. With these residual edges we can build a <em>Residual Network</em> that is used in cancelling flows at multiple edges.</p> <script type="text/tikz">
+\begin{document}
+\usetikzlibrary{automata, positioning}
+\tikzset{ vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
+\tikzset{ source/.style={fill=green!20}}
+\tikzset{ sink/.style={fill=yellow!20}}
+\tikzset{ saturated/.style={opacity=0.3}}
+\tikzset{ residual/.style={blue!70}}
+\begin{tikzpicture}
+    \node[vertex] (x) {$x$};
+    \node[vertex, right of=x] (y) {$y$};
+
+    \path[->] (x) edge[above] node{2:3} (y);
+    \path[->] (y) edge[residual, bend left=30] node[below]{2} (x);
+\end{tikzpicture}
+\end{document}
+</script> <h3 id="residual-network">Residual Network</h3> <p>Given a flow network $G$, and a flow $f$, the <em>residual network</em> $G_f$ consists of edges whose capacities represent how the flow can change on edges of $G$. An edge of $G$ can admit more flow if its capacity is greater than its current flow. We call the current capacity as <em>residual capacity</em> $c_f (u,v) = c(u,v) - f(u,v)$. Only the edges with $c_f &gt; 0$ are present in $G_f$. In addition, if there is a $x$ units of flow in an edge $(u,v) \in E$, then there will be a reverse edge $(v,u) \in E_f$ with capacity $f(u,v)$.</p> <p>Lets formalize this mathematically. Given a flow $f$, the <em>residual capacity</em> $c_f(u,v)$ for a pair of vertices $u,v \in V$ as follows,</p> \[c_f(u,v) = \begin{cases} c(u,v) - f(u,v) &amp; \text{if } (u,v) \in E \\ f(u,v) &amp; \text{if } (v,u) \in E \\ 0 &amp; \text{ otherwise} \end{cases}\] <p>and $G_f = (V, E_f)$ is the residual network after inducing $f$, where</p> \[E_f = \{(u,v) \in V \times V : c_f (u,v) &gt; 0\}\] <p>In addition, we say an edge $(u,v)$ become <em>saturated</em> if the current flow is equal to its capacity. $f(u,v) = c(u,v)$.</p> <p>We established all the required setup to undo a flow in an edge. Now, lets see how it is used in practice.</p> <h2 id="ford-fulkerson">Ford-Fulkerson</h2> <p>The basic idea of the Ford-Fulkerson is very simple and is similar to what we did before, iteratively increase the flow in the network by finding a valid $s - t$ path and augmenting it, but the difference is we compute the path in $G_f$ instead of $G$. It terminates when it cannot find a $s - t$ path.</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">FORD</span><span class="o">-</span><span class="n">FULKERSON</span> <span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">for</span> <span class="n">each</span> <span class="n">edge</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="n">in</span> <span class="n">G</span><span class="p">.</span><span class="n">E</span>
         <span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">).</span><span class="n">f</span> <span class="o">=</span> <span class="mi">0</span> 
     <span class="k">while</span> <span class="n">there</span> <span class="n">exists</span> <span class="n">a</span> <span class="n">path</span> <span class="n">from</span> <span class="n">s</span> <span class="n">to</span> <span class="n">t</span> <span class="n">in</span> <span class="n">residual</span> <span class="n">network</span> <span class="n">G_f</span> <span class="p">{</span>
@@ -133,7 +169,47 @@
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">f</span>
 <span class="p">}</span>
-</code></pre></div></div> <p>Below is the residual network for the previous example after three iterations.</p> <p>Now, Ford Fulkerson can find a path $s \rightarrow a \rightarrow b \rightarrow d \rightarrow t$. If we augment that path to $G$, then this <em>cancels</em> the flow $a\rightarrow b$ and diverts it to $b\rightarrow d \rightarrow t$. This leaves some space to push additional flow through $a \rightarrow c \rightarrow t$. In the next iteration, Ford Fulkerson can find a path $s \rightarrow a \rightarrow c \rightarrow t$ to induce 1 more unit of flow.</p> <h4 id="analysis">Analysis</h4> <p>If $f^*$ is the maximum flow in the flow network $G$, then the algorithm executes the while loop atmost $|f^*|$ times, since the flow value increases by atleast 1 unit in each iteration and each iteration takes $O(E)$ to compute the path from $s-t$. Thus the time complexity of Ford-Fulkerson method is $O(|f^*| E)$.</p> <p>We don’t want the runtime depends on the flow value. A very small network could have its flow value in billions and the Ford-Fulkerson method can take forever to return an answer. In addition, if we are not careful on how we select augmenting path, we end up doing waste work. To see what it means, let’s look at the following example.</p> <script type="text/tikz">
+</code></pre></div></div> <p>Below is the residual network for the previous example after three iterations. Notice that the edges $(s,b)$, $(a,c)$, and $(b,a)$ are <em>saturated</em>.</p> <script type="text/tikz">
+\begin{document}
+    \usetikzlibrary{automata, positioning}
+    \tikzset{ vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20}}
+    \tikzset{ source/.style={fill=green!20}}
+    \tikzset{ sink/.style={fill=yellow!20}}
+    \tikzset{ saturated/.style={opacity=0.3}}
+    \tikzset{ residual/.style={blue!60}}
+    \begin{tikzpicture}
+    \node[vertex, source] (s) {$s$};
+    \node[vertex, above right of=s] (a) {$a$};
+    \node[vertex, below right of=s] (b) {$b$};
+    \node[vertex, right of=a] (c) {$c$};
+    \node[vertex, right of=b] (d) {$d$};
+    \node[vertex, sink, above right of=d] (t) {$t$};
+
+    \path[->, thick] (a) 
+        edge[above, saturated] node {2:2} (c) 
+        edge[residual, below,bend left=20] node{1} (s)
+        edge[residual, bend left=20] node[right]{1} (b);
+    \path[->, thick] (c) 
+        edge[above] node[sloped] {2:3} (t)
+        edge[above] node {1} (b)
+        edge[residual, bend left=20] node[below]{2} (a);
+    \path[->, thick] (s) 
+        edge[above] node[sloped] {1:3} (a) 
+        edge[below, saturated] node[sloped] {2:2} (b);
+    \path[->, thick] (b) 
+        edge[below] node {1:3} (d)
+        edge [left, saturated] node {1:1} (a)
+        edge[residual, bend right=20] node[sloped, above]{2} (s);
+    \path[->, thick] (d) 
+        edge[below] node[sloped] {1:2} (t) 
+        edge[left] node {3} (c)
+        edge[residual, bend right=20] node[sloped, above] {1} (b);
+    \path[->, thick] (t) 
+        edge[residual, bend left=20] node[sloped, below] {2} (c)
+        edge[residual, bend right=20] node[above, sloped]{1} (d);
+\end{tikzpicture}
+\end{document}
+</script> <p>Now, Ford Fulkerson can find a path $s \rightarrow a \rightarrow b \rightarrow d \rightarrow t$. If we augment that path to $G$, then it <em>cancels</em> the flow $a \rightarrow b$, $b$ has to divert that flow to $d$. Now, since the flow from $b$ to $a$ is cancelled, $a$ should accept one more unit of flow to satisfy the law of conservation. The edge $(a,c)$ becomes <em>unsaturated</em>. In the next iterations, Ford Fulkerson finds the path $s \rightarrow a \rightarrow c \rightarrow t$ and induces 1 more unit of flow.</p> <h3 id="analysis">Analysis</h3> <p>If $f^*$ is the maximum flow in the flow network $G$, then the algorithm executes the while loop atmost $|f^*|$ times, since the flow value increases by atleast 1 unit in each iteration and each iteration takes $O(E)$ to compute the path from $s-t$. Thus the time complexity of Ford-Fulkerson method is $O(|f^*| E)$.</p> <p>We don’t want the runtime depends on the flow value. A very small network could have its flow value in billions and the Ford-Fulkerson method can take forever to return an answer. In addition, if we are not careful on how we select augmenting path, we end up doing waste work. To see what it means, let’s look at the following example.</p> <script type="text/tikz">
 \begin{document}
     \usetikzlibrary{automata, positioning}
     \tikzset{ vertex/.style={draw, circle, minimum size=0.75cm, node distance=3cm, >=stealth, fill=violet!20} }
@@ -202,7 +278,7 @@
         edge[residual, sloped, bend left=15, below] node {1} (a);
     \end{tikzpicture}
 \end{document}
-</script> <p>Now, it is possible that the Ford-Fulkerson method (in an unlucky case) to iteratively increase the flow by 1 unit by always selecting these two paths. This would result in $2 \times 10^9$ iterations. But had we chosen the the path $s \rightarrow a \rightarrow t$ and $s \rightarrow b \rightarrow t$, we only need 2 iterations.</p> <p>Next, we see how some cleverness can help us to drastically improve the runtime.</p> <h2 id="edmonds-karp">Edmonds-Karp</h2> <p>Edmonds-Karp algorithm is <em>an</em> implementation of the Ford-Fulkerson method, which always chooses shortest path from $s - t$ by using BFS and augments it to the network. Now, lets see how this help us to improve the runtime. The main intuition behind the Edmonds-Karp’s algorithm is to always select shortest path to avoid long cycles, which helps to bound the number of augmenting paths to $O(VE)$.</p> <details><summary>Click here for detailed proof.</summary> <ul> <li>Theorem: Total number of flow augmentations in Edmonds-Karp is $O(VE)$.</li> </ul> <p>To prove this, we first need to establish a bound on number of times an edge can become <em>critical</em>. For this, we have to look closely at the distances of nodes from the source.</p> <p>We define $\delta_f (u,v)$ as the shortest path distance from $u$ to $v$ in $G_f$ where each edge has a unit distance. Let $p = s\leadsto u \rightarrow v \leadsto t$ be a shortest path from $s$ to $t$ in $G_f$, thus $\delta_f (s,v) = \delta_f(s,u) + 1$. And let $u,v$ be the edge that becomes <em>critical</em> after augmenting the path and $f’$ be the new flow. Since, $(u,v)$ is saturated it’ll not be in $G_{f’}$ and a reverse edge $(v,u)$ will be added to $G_{f’}$.</p> <p>For the original edge $(u,v)$ to ever reappear and become <em>critical</em> again later in the process, we first have to push the flow backwards along the reversed edge $(v,u)$ to undo it. In order to push the flow backwards from $v$ to $u$, there must be a shortest path $\hat{p} = s \leadsto v \rightarrow u \leadsto t$ in some $G_{\hat{f}}$ and thus $\delta_{\hat f}(s,u) = \delta_{\hat f}(s,v) +1$.</p> <p>We still need one more piece to prove the theorem. When we find an augmenting path, there will be atleast one <em>critical</em> edge in the path. This <em>critical</em> edge will be removed in the updated residual network $G_{f’}$. Thus the shortest path distance in $G_{f’}$ is non-decreasing, i.e, $\delta_{f’} (s,t) \geq \delta_f(s,t)$. This means that the new distance is at least greater than the old distance $\delta_{\hat f} (s,v) \geq \delta_f(s,v)$</p> \[\begin{align*} \delta_{\hat f} (s,u) &amp;= \delta_{\hat f}(s,v) + 1 \\ &amp;\geq \delta_f (s,v) + 1 \\ &amp;\geq \delta_f (s,u) + 1 + 1\\ &amp;\geq \delta_f (s,u) + 2 \end{align*}\] <p>The above inequality tells us that every time an edge $(u,v)$ becomes re-saturated, its distance from $s$ must have increased by at least 2.</p> <p>Knowing that a simple path cannot be longer than the total number of vertices $V$ (without using a cycle, which the BFS avoids) and distance increases by at least 2 every time an edge is re-saturated, an edge can only become <em>critical</em> at most $V/2$ times before it becomes unreachable.</p> <p>If a single edge can be <em>critical</em> at most $ V/2 $ times, and we have $E$ edges in the network. So there can be at most $(VE)/2 \in O(VE)$ total bottlenecks across the entire run of the algorithm.</p> </details> <p>We know that the time complexity of BFS is $O(V+E)$. Given that all the nodes in the network has atleast one incoming and one outgoing edges (except $s$ and $t$), so $|E| &gt; |V|$ and the time complexity simplifies to $O(E)$. There are at most $O(VE)$ iterations of BFS, thus Edmonds-Karp takes $O(VE^2)$ time.</p> <h2 id="applications">Applications</h2> <p>Flow networks show up in many real-world problems in computer science and operations research. Below are some,</p> <ul> <li> <p>Transportation and Logistics: Flow networks are widely used to optimize the movement of goods through transportation systems. Nodes can represent warehouses, distribution centers, or retail stores, while edges represent routes with capacity constraints. By computing maximum flow or minimum-cost flow, companies can determine the most efficient way to ship products while avoiding bottlenecks.</p> </li> <li> <p>Communication and Data Networks: In computer networks, flow models help determine how data should be routed to maximize throughput and minimize congestion. Problems such as bandwidth allocation, packet routing, and network reliability can all be framed as flow problems, ensuring efficient use of infrastructure.</p> </li> <li> <p>Bipartite Matching and Assignment: Many assignment problems can be reduced to flow networks. For example, matching workers to jobs, students to schools, or tasks to machines can be modeled as a bipartite graph and solved using max-flow techniques. This ensures an optimal assignment under given constraints.</p> </li> </ul>]]></content><author><name></name></author><category term="Graphs"/><category term="graph"/><category term="optimization"/><summary type="html"><![CDATA[Finding a flow to push through a network given some constraints.]]></summary></entry><entry><title type="html">Floyd’s Cycle Detection</title><link href="https://var-nan.github.io/blog/2026/floy-cycle-detection/" rel="alternate" type="text/html" title="Floyd’s Cycle Detection"/><published>2026-02-13T10:00:00+00:00</published><updated>2026-02-13T10:00:00+00:00</updated><id>https://var-nan.github.io/blog/2026/floy-cycle-detection</id><content type="html" xml:base="https://var-nan.github.io/blog/2026/floy-cycle-detection/"><![CDATA[<p>Given a linked list, the question is to find if the linked list contains a cycle or not. If it does contain a cycle, find the start of the cycle.</p> <p><br/></p> <script type="text/tikz">
+</script> <p>Now, it is possible that the Ford-Fulkerson method (in an unlucky case) to iteratively increase the flow by 1 unit by always selecting these two paths. This would result in $2 \times 10^9$ iterations. But had we chosen the the path $s \rightarrow a \rightarrow t$ and $s \rightarrow b \rightarrow t$, we only need 2 iterations.</p> <p>Next, we see how some cleverness can help us to drastically improve the runtime.</p> <h2 id="edmonds-karp">Edmonds-Karp</h2> <p>Edmonds-Karp algorithm is <em>an</em> implementation of the Ford-Fulkerson method, which always chooses shortest path from $s - t$ by using BFS and augments it to the network. Now, lets see how this help us to improve the runtime. The main intuition behind the Edmonds-Karp’s algorithm is to always select shortest path to avoid long cycles, which helps to bound the number of augmenting paths to $O(VE)$.</p> <details><summary>detailed proof.</summary> <ul> <li>Theorem: Total number of flow augmentations in Edmonds-Karp is $O(VE)$.</li> </ul> <p>To prove this, we first need to establish a bound on number of times an edge can become <em>critical</em>. For this, we have to look closely at the distances of nodes from the source.</p> <p>We define $\delta_f (u,v)$ as the shortest path distance from $u$ to $v$ in $G_f$ where each edge has a unit distance. Let $p = s\leadsto u \rightarrow v \leadsto t$ be a shortest path from $s$ to $t$ in $G_f$, thus $\delta_f (s,v) = \delta_f(s,u) + 1$. And let $u,v$ be the edge that becomes <em>critical</em> after augmenting the path and $f’$ be the new flow. Since, $(u,v)$ is saturated it’ll not be in $G_{f’}$ and a reverse edge $(v,u)$ will be added to $G_{f’}$.</p> <p>For the original edge $(u,v)$ to ever reappear and become <em>critical</em> again later in the process, we first have to push the flow backwards along the reversed edge $(v,u)$ to undo it. In order to push the flow backwards from $v$ to $u$, there must be a shortest path $\hat{p} = s \leadsto v \rightarrow u \leadsto t$ in some $G_{\hat{f}}$ and thus $\delta_{\hat f}(s,u) = \delta_{\hat f}(s,v) +1$.</p> <p>We still need one more piece to prove the theorem. When we find an augmenting path, there will be atleast one <em>critical</em> edge in the path. This <em>critical</em> edge will be removed in the updated residual network $G_{f’}$. Thus the shortest path distance in $G_{f’}$ is non-decreasing, i.e, $\delta_{f’} (s,t) \geq \delta_f(s,t)$. This means that the new distance is at least greater than the old distance $\delta_{\hat f} (s,v) \geq \delta_f(s,v)$</p> \[\begin{align*} \delta_{\hat f} (s,u) &amp;= \delta_{\hat f}(s,v) + 1 \\ &amp;\geq \delta_f (s,v) + 1 \\ &amp;\geq \delta_f (s,u) + 1 + 1\\ &amp;\geq \delta_f (s,u) + 2 \end{align*}\] <p>The above inequality tells us that every time an edge $(u,v)$ becomes re-saturated, its distance from $s$ must have increased by at least 2.</p> <p>Knowing that a simple path cannot be longer than the total number of vertices $V$ (without using a cycle, which the BFS avoids) and distance increases by at least 2 every time an edge is re-saturated, an edge can only become <em>critical</em> at most $V/2$ times before it becomes unreachable.</p> <p>If a single edge can be <em>critical</em> at most $ V/2 $ times, and we have $E$ edges in the network. So there can be at most $(VE)/2 \in O(VE)$ total bottlenecks across the entire run of the algorithm.</p> </details> <p>We know that the time complexity of BFS is $O(V+E)$. Given that all the nodes in the network has atleast one incoming and one outgoing edges (except $s$ and $t$), so $|E| &gt; |V|$ and the time complexity simplifies to $O(E)$. There are at most $O(VE)$ iterations of BFS, thus Edmonds-Karp takes $O(VE^2)$ time.</p> <h2 id="applications">Applications</h2> <p>Flow networks show up in many real-world problems in computer science and operations research. Below are some,</p> <ul> <li> <p>Transportation and Logistics: Flow networks are widely used to optimize the movement of goods through transportation systems. Nodes can represent warehouses, distribution centers, or retail stores, while edges represent routes with capacity constraints. By computing maximum flow or minimum-cost flow, companies can determine the most efficient way to ship products while avoiding bottlenecks.</p> </li> <li> <p>Communication and Data Networks: In computer networks, flow models help determine how data should be routed to maximize throughput and minimize congestion. Problems such as bandwidth allocation, packet routing, and network reliability can all be framed as flow problems, ensuring efficient use of infrastructure.</p> </li> <li> <p>Bipartite Matching and Assignment: Many assignment problems can be reduced to flow networks. For example, matching workers to jobs, students to schools, or tasks to machines can be modeled as a bipartite graph and solved using max-flow techniques. This ensures an optimal assignment under given constraints.</p> </li> </ul>]]></content><author><name></name></author><category term="Graphs"/><category term="graph"/><category term="optimization"/><summary type="html"><![CDATA[A flow network $G = (V,E)$ is a directed graph with set of vertices $V$ and set of edges $E$, where each edge $e \in E$ has a nonnegative capacity $c (e) \geq 0$. There are two distinguished vertices in this network: a source $s$ and a sink $t$ that behave slightly different as we see in a moment. A source vertex has no incoming flow and a sink vertex has no outgoing flow. Below is an example of such a flow network. The numbers on the edges are the capacities of these edges.]]></summary></entry><entry><title type="html">Floyd’s Cycle Detection</title><link href="https://var-nan.github.io/blog/2026/floy-cycle-detection/" rel="alternate" type="text/html" title="Floyd’s Cycle Detection"/><published>2026-02-13T10:00:00+00:00</published><updated>2026-02-13T10:00:00+00:00</updated><id>https://var-nan.github.io/blog/2026/floy-cycle-detection</id><content type="html" xml:base="https://var-nan.github.io/blog/2026/floy-cycle-detection/"><![CDATA[<p>Given a linked list, the question is to find if the linked list contains a cycle or not. If it does contain a cycle, find the start of the cycle.</p> <p><br/></p> <script type="text/tikz">
 \begin{document}
     \usetikzlibrary{arrows.meta, positioning}
     \begin{tikzpicture}[

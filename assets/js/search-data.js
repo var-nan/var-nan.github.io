@@ -62,7 +62,7 @@ ninja.data = [{
         
           title: "Flow Networks",
         
-        description: "Finding a flow to push through a network given some constraints.",
+        description: "",
         section: "Posts",
         handler: () => {
           

@@ -30,20 +30,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/experience/";
           },
-        },{id: "nav-",
-          title: "",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/repositories/";
-          },
-        },{id: "nav-projects",
-          title: "Projects",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/projects/";
-          },
         },{id: "nav-publications",
           title: "Publications",
           description: "",
@@ -64,6 +50,20 @@ ninja.data = [{
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/resume/";
+              },
+            },{id: "dropdown-repositories",
+              title: "repositories",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/repositories/";
+              },
+            },{id: "dropdown-projects",
+              title: "projects",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/projects/";
               },
             },{id: "post-flow-networks",
         

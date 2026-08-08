@@ -2,8 +2,8 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: Raja K # the website title (if blank, full name will be used instead)
-first_name: Raja Sai Nandhan
+title: Raja Kataru # the website title (if blank, full name will be used instead)
+first_name: Raja Sai Nandhan 
 middle_name:
 last_name: Kataru
 # contact_note: >
@@ -16,7 +16,8 @@ last_name: Kataru
 #   Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
 keywords: # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: ⚛️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+# icon: ⚛️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+icon: logo.png
 
 url: https://var-nan.github.io # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root

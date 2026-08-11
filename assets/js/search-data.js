@@ -168,7 +168,7 @@ ninja.data = [{
         title: 'email',
         section: 'Socials',
         handler: () => {
-          window.open("mailto:%6B%72%73.%6E%61%6E%64%68%61%6E@%70%72%6F%74%6F%6E%6D%61%69%6C.%63%6F%6D", "_blank");
+          window.open("mailto:%6B%72%73.%6E%61%6E%64%68%61%6E%39%39%39@%67%6D%61%69%6C.%63%6F%6D", "_blank");
         },
       },{
         id: 'social-github',
@@ -190,6 +190,13 @@ ninja.data = [{
         section: 'Socials',
         handler: () => {
           window.open("https://www.linkedin.com/in/krsnandhan", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=2GUFv_YAAAAJ", "_blank");
         },
       },{
       id: 'light-theme',

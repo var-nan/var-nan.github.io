@@ -59,12 +59,20 @@ Talking about computers is a good way to get me involved.
       <img src="{{ '/assets/img/accenture.svg' | relative_url }}" alt="Company Logo">
     </a>
 
+  <!-- National Institute of wind energy -->
+    <a href="https://niwe.res.in" target="_blank" rel="noopener noreferrer" title="National Institute of Wind Energy">
+      <img src="{{ '/assets/img/niwe-logo.png' | relative_url }}" alt="National Institute of Wind Energy Logo">
+    </a>
+
   <!-- Hindustan University -->
     <a href="https://hindustanuniv.ac.in" target="_blank" rel="noopener noreferrer" title="Hindustan University">
       <img src="{{ '/assets/img/hits-logo.png' | relative_url }}" alt="Previous University Logo">
     </a>
-
-    
+      
+  <!-- HAL -->
+    <a href="https://hal-india.co.in/home" target="_blank" rel="noopener noreferrer" title="Hindustan Aeronautics Limited">
+      <img src="{{ '/assets/img/hal-logo.png' | relative_url }}" alt="Hindustan Aeronautics Limited Logo">
+    </a>
   </div>
 </div>
 ---

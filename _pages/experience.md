@@ -42,3 +42,6 @@ National Institute of Wind Energy $\quad | \quad$ Chennai, India $\quad | \quad$
 Python, Pandas, Numpy
 * Developed automated python scripts and pipelines to analyze solar radiation data and perform EDA.
 * Reduced the data collection time by 5x with 8 threads polling the data server.
+
+### Summer Intern
+Hindustan Aeronautics Limited $\quad | \quad$ Bangalore, India $\quad | \quad$ May 2019 -- July 2021

@@ -27,9 +27,9 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I'm a computer science PhD student at Iowa State. My research lies at the intersection of the two interesting areas that I like most: High Performance Computing (HPC) and Computational Fluid Dynamics (CFD). Specifically, I focus on Mixed-Precision Algorithms for CFD solvers. My PhD research is currently supervised by Dr. [Baskar Ganapathysubramanian](https://www.engineering.iastate.edu/people/profile/baskarg/).
+I am a new computer science PhD student at Iowa State. My research lies at the intersection of the two interesting areas that I like most: High Performance Computing (HPC) and Computational Fluid Dynamics (CFD). Specifically, I focus on Mixed-Precision Algorithms for CFD solvers. My PhD research is currently supervised by Dr. [Baskar Ganapathysubramanian](https://www.engineering.iastate.edu/people/profile/baskarg/).
 
-I recently completed my master's degree in computer science here at Iowa State. My master's thesis focuses on developing a parallel framework a stochastic Mixed-Integer Programming solver based on Decision Diagrams (DD) and was supervised by Dr. [Danial Davarnia](https://sites.google.com/view/danialdavarnia), and Dr. [Ali Jannesari](https://swapp.cs.iastate.edu/people/ali-jannesari).
+I recently completed my master's degree in computer science here at Iowa State. My master's thesis focuses on developing a parallel framework for a stochastic Mixed-Integer Programming solver based on Decision Diagrams (DD) and was supervised by Dr. [Danial Davarnia](https://sites.google.com/view/danialdavarnia), and Dr. [Ali Jannesari](https://swapp.cs.iastate.edu/people/ali-jannesari).
 
 During my master's, I worked as a research assistant at [SwAPP lab](https://swapp.cs.iastate.edu) focused on several areas such as HPC, Mathematical programming, GPU compilers, and Distributed Systems. I also worked in Dr. [Liyi Li](https://faculty.sites.iastate.edu/liyili2/)'s group as a RA, on Quantum Circuit testing.
 
@@ -40,3 +40,31 @@ I am passionate about developing scalable, high-performance systems and explorin
 
 <!-- Apart from academics, I'm into computers, and cooking (just a rookie cook).  -->
 Talking about computers is a good way to get me involved.
+
+<div class="affiliations-section">
+  <div class="affiliations-title">Affiliations</div>
+  <div class="affiliations-grid">
+
+    <a href="https://swapp.cs.iastate.edu/" target="_blank" rel="noopener noreferrer" title="SwAPP Lab">
+      <img src="{{ '/assets/img/swapp-logo.png' | relative_url }}" alt="SwAPP Lab Logo">
+    </a>
+
+    <!-- Iowa State University -->
+    <a href="https://iastate.edu/" target="_blank" rel="noopener noreferrer" title="Iowa State University">
+      <img src="{{ '/assets/img/iowa-state-logo.png' | relative_url }}" alt="Iowa State University Logo">
+    </a>
+
+  <!-- accenture -->
+    <a href="https://accenture.com" target="_blank" rel="noopener noreferrer" title="Accenture">
+      <img src="{{ '/assets/img/accenture.svg' | relative_url }}" alt="Company Logo">
+    </a>
+
+  <!-- Hindustan University -->
+    <a href="https://hindustanuniv.ac.in" target="_blank" rel="noopener noreferrer" title="Hindustan University">
+      <img src="{{ '/assets/img/hits-logo.png' | relative_url }}" alt="Previous University Logo">
+    </a>
+
+    
+  </div>
+</div>
+---

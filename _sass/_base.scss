@@ -1565,3 +1565,49 @@ figure.cover {
     color: #23212d !important;
   }
 }
+
+/* Associated Places Favicon Row */
+.affiliations-section {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--global-divider-color);
+  text-align: center;
+
+  .affiliations-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--global-text-color-light);
+  }
+
+  .affiliations-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    a {
+      display: inline-block;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      opacity: 0.85;
+
+      &:hover {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
+
+    img {
+      height: 40px;          /* Adjust height to fit your preferences */
+      width: auto;
+      max-width: 120px;
+      object-fit: contain;
+      filter: grayscale(20%); /* Optional: subtle grayscale effect until hover */
+
+      &:hover {
+        filter: grayscale(0%);
+      }
+    }
+  }
+}

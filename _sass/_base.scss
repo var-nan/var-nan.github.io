@@ -1611,3 +1611,106 @@ figure.cover {
     }
   }
 }
+
+/* Experience Page Styling */
+.experience-card {
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--global-card-bg-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .experience-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+
+    .company-logo {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #ffffff;
+      padding: 4px;
+      border: 1px solid var(--global-divider-color);
+      flex-shrink: 0;
+    }
+
+    .header-details {
+      flex-grow: 1;
+
+      .title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+
+        .role-title {
+          margin: 0;
+          font-size: 1.2rem;
+          font-weight: 700;
+        }
+
+        .date-range {
+          font-size: 0.875rem;
+          color: var(--global-text-color-light);
+          font-style: italic;
+        }
+      }
+
+      .company-info {
+        font-size: 0.95rem;
+        color: var(--global-theme-color);
+        font-weight: 600;
+
+        .location {
+          color: var(--global-text-color-light);
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
+  .tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+
+    .badge-item {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--global-text-color);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      // font-family: monospace;
+      border: 1px solid var(--global-divider-color);
+    }
+  }
+
+  .experience-bullets {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+  }
+
+  .experience-bullets a{
+    color: var(--global-theme-color);
+    text-decoration: underline;
+    
+    &:hover {
+      color: var(--global-hover-color);
+    }
+  }
+}

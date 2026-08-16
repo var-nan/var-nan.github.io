@@ -42,7 +42,7 @@ I am passionate about developing scalable, high-performance systems and explorin
 Talking about computers is a good way to get me involved.
 
 <div class="affiliations-section">
-  <div class="affiliations-title">Affiliations</div>
+  <div class="affiliations-title">All Affiliations</div>
   <div class="affiliations-grid">
 
     <a href="https://swapp.cs.iastate.edu/" target="_blank" rel="noopener noreferrer" title="SwAPP Lab">

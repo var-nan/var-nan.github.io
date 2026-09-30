@@ -6,6 +6,37 @@ nav: true
 nav_order: 4
 ---
 
+
+<div class="experience-card">
+  <div class="experience-header">
+    <img src="{{ '/assets/img/iastate-edu-logo.png' | relative_url }}" alt="Iowa State University Logo" class="company-logo">
+    <div class="header-details">
+      <div class="title-row">
+        <h3 class="role-title">Research Assistant</h3>
+        <span class="date-range">Present</span>
+      </div>
+      <div class="company-info">
+        ComPM Lab (Iowa State University) <span class="location">| Ames, Iowa</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-badges">
+    <span class="badge-item">C++</span>
+    <span class="badge-item">CUDA</span>
+    <span class="badge-item">Linux</span>
+    <span class="badge-item">Pthreads</span>
+    <span class="badge-item">Intel VTune</span>
+    <span class="badge-item">Perf</span>
+    <span class="badge-item">GDB</span>
+    <span class="badge-item">Strace</span>
+  </div>
+
+  <ul class="experience-bullets">
+    <li> Finite Element Methods + GPU parallelization. </li>
+  </ul>
+</div>
+
 <!-- Iowa State University -->
 <div class="experience-card">
   <div class="experience-header">

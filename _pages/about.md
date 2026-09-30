@@ -8,10 +8,10 @@ profile:
   align: right
   image: profile_pic.jpeg
   image_circular: false # crops the image to make it circular
-  # more_info: >
-  #   <p>115 Atanasoff Hall</p>
-  #   <p>2434 Osborn Dr</p>
-  #   <p>Ames, IA 50011</p>
+  more_info: >
+     <p>2029 Black Engineering Bldg</p>
+     <p>2529 Union Dr</p>
+     <p>Ames, IA 50011</p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
@@ -31,7 +31,7 @@ I am a new computer science PhD student at Iowa State. My research lies at the i
 
 I recently completed my master's degree in computer science here at Iowa State. My master's thesis focuses on developing a parallel framework for a stochastic Mixed-Integer Programming solver based on Decision Diagrams (DD) and was supervised by Dr. [Danial Davarnia](https://sites.google.com/view/danialdavarnia), and Dr. [Ali Jannesari](https://swapp.cs.iastate.edu/people/ali-jannesari).
 
-During my master's, I worked as a research assistant at [SwAPP lab](https://swapp.cs.iastate.edu) focused on several areas such as HPC, Mathematical programming, GPU compilers, and Distributed Systems. I also worked in Dr. [Liyi Li](https://faculty.sites.iastate.edu/liyili2/)'s group as a RA, on Quantum Circuit testing.
+During my master's, I worked as a research assistant at [SwAPP lab](https://swapp.cs.iastate.edu) focused on several areas such as HPC, Mathematical programming, GPU compilers, and Distributed Systems. I also worked in Dr. [Liyi Li](https://faculty.sites.iastate.edu/liyili2/)'s group as a research assistant, on Quantum Circuit testing.
 
 Prior to master's, I worked at Accenture, a global professional services company, as a software engineer, developed REST microservices for some of its clients with Java as the backend.
 
@@ -42,7 +42,7 @@ I am passionate about developing scalable, high-performance systems and explorin
 Talking about computers is a good way to get me involved.
 
 <div class="affiliations-section">
-  <div class="affiliations-title">All Affiliations</div>
+  <div class="affiliations-title">Previous Affiliations</div>
   <div class="affiliations-grid">
 
     <a href="https://swapp.cs.iastate.edu/" target="_blank" rel="noopener noreferrer" title="SwAPP Lab">

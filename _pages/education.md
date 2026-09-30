@@ -27,6 +27,7 @@ nav_order: 3
 
   <ul class="experience-bullets">
     <!-- Add research highlights or advisor info here -->
+    <li> Advisor : Dr. <a href="https://www.engineering.iastate.edu/people/profile/baskarg/" target="_blank">Baskar Ganapathysubramanian</a> </li>
   </ul>
 </div>
 <!-- Iowa State University -->
